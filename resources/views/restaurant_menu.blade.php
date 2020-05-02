@@ -147,14 +147,14 @@
 <div class="container-fluid header-1 pure-veg-{{$cdata['is_pure_veg']}}" id="{{str_replace(' ','',$cdata['category_name'])}}">
   @if($loop->first)
   <!-- offers badge start here -->
-  <div class="container">
+  <!-- <div class="container">
     <div class="">
       <ul class="offers-top-badge">
         <li class="ml-0"> <img src="{{asset('assets/img/ic-discount-badge.svg')}}"> 10% OFF on all items </li>
         <li class="ml-0"> <a href="offers" class="float-right mr-0">All OFFERS</a> </li>
       </ul>
     </div>
-  </div> 
+  </div>  -->
   <!-- offers badge end here -->
   @endif 
   <div class="container">
@@ -210,9 +210,9 @@
 
         </div>
       </div>
-      <div class="col">
+      <!-- <div class="col">
         <span class="d-inline item-discount-inline change-txt-size">  <img src="{{asset('assets/img/ic-discount.svg')}}" class="mr-1"> {{$idata['discount']}}% off </span>
-      </div>            
+      </div>  -->           
     </div>
     @endif
 

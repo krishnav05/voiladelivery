@@ -40,8 +40,8 @@
 </div>
 
 
-<div class="row mt-5">
- <input type="submit" name="" value="GO TO MENU" class="btn btn-primary col mt-5" onclick="window.location = '/';">
+<div class="row fixed-bottom">
+ <input type="submit" name="" value="GO TO MENU" onclick="window.location = '/';" class="btn btn-primary col rounded-0">
 
 </div>
 <!-- <div class="row mt-3 text-center">

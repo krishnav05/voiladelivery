@@ -78,12 +78,14 @@
      <div class="row">
        <h2 class="col-sm-12">Delivery Date/Time</h2>
        <div class="col mt-3">
+        <p style="color: #999;">Select Date</p>
          <a class="select-date active">2020-04-26</a>
-         <a class="select-date">2020-04-27</a>
-         <a class="select-date">2020-04-28</a>
-         <a class="select-date">2020-04-29</a>
+         <a class="select-date">2020-05-03</a>
+         <a class="select-date">2020-05-04</a>
+         <a class="select-date">2020-05-05</a>
        </div>
        <div class="col mt-3">
+        <p style="color: #999;">Select Date</p>
          <a class="select-time active">10 AM TO 1 PM</a>
          <a class="select-time">2 PM TO 6 PM</a>
        </div>
