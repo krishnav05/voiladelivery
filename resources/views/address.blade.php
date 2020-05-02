@@ -31,16 +31,31 @@
     </div>
     @if(!$all_address->isEmpty())
     @foreach($all_address as $key)
+    @if($loop->first)
     <div class="row">
-      <div class="col">
+      <div class="col"><p>
+        <input class="check" type="checkbox" checked="checked" name="" id="{{$key['id']}}">
+        {{$key['name']}} , 
+        {{$key['flat_number']}} ,
+        {{$key['society']}} ,
+        {{$key['pincode']}} ,
+        {{$key['landmark']}}</p>
+          
+      </div>  
+    </div>
+    @else
+    <div class="row">
+      <div class="col"><p>
         <input class="check" type="checkbox" name="" id="{{$key['id']}}">
         {{$key['name']}} , 
         {{$key['flat_number']}} ,
         {{$key['society']}} ,
         {{$key['pincode']}} ,
-        {{$key['landmark']}}  
+        {{$key['landmark']}} </p>
+         
       </div>  
     </div>
+    @endif
     @endforeach
     @endif
     <div class="row">
@@ -113,6 +128,7 @@
                         if(data.status == 'success')
                         {
                           $('#address_form').trigger('reset').slideUp();
+                          window.location.reload();
                         }
                     }
                 });
@@ -178,7 +194,10 @@
 
 
   document.getElementById('paynow').onclick = function () {
-      var options = {
+
+    if ($('input[type=checkbox]').is(":checked")) {
+      //any one is checked
+       var options = {
         key: "{{ env('RAZORPAY_KEY') }}",
         amount: $('#paynow').attr('data-price'),
         name: 'VoilaDelivery',
@@ -188,6 +207,13 @@
     }
       window.r = new Razorpay(options);
         r.open()
+    }
+    else {
+    //none is checked
+    alert('Please Select Address');
+    }
+
+     
     }
 </script>
 
