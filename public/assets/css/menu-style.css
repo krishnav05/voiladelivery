@@ -891,15 +891,18 @@ h5.remove-itm-billing{
 .address-ad-frm input[type="text"]{
 									margin-bottom: .5rem; 
 								  }
-.select-date{
-				border:1px solid #ced4da;
-				color: #ced4da;
-				border-radius: 3px;
-				padding: .5rem;
-				margin: .5rem;
-				display: block;
-				text-align: center;
-			}
+.select-date {
+
+    border: 1px solid #ced4da;
+    color: #ced4da;
+    border-radius: 3px;
+    padding: .5rem;
+    margin: .5rem;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+
+}
 .select-date.active{
 				border:1px solid #DCAD2B;
 				color: #DCAD2B;
@@ -910,15 +913,18 @@ h5.remove-itm-billing{
 				text-align: center;
 			}
 
-.select-time{
-				border:1px solid #ced4da;
-				color: #ced4da;
-				border-radius: 3px;
-				padding: .5rem;
-				margin: .5rem;
-				display: block;
-				text-align: center;
-			}
+.select-time {
+
+    border: 1px solid #ced4da;
+    color: #ced4da;
+    border-radius: 3px;
+    padding: .5rem;
+    margin: .5rem;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+
+}
 .select-time.active{
 				border:1px solid #DCAD2B;
 				color: #DCAD2B;
