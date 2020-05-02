@@ -6,7 +6,7 @@
    <div class="container">
     <div class="row pt-4">
             <div class="col-sm-6 text-left">
-                <a href="../" class="next-prev-menu-item"> 
+                <a href="/kitchen" class="next-prev-menu-item"> 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                   <g id="ic_left-carrot" transform="translate(67 1099) rotate(180)">
                     <g id="Rectangle_105" data-name="Rectangle 105" transform="translate(51 1083)" fill="#fff" stroke="#A8A596" stroke-width="1" opacity="0">
@@ -75,12 +75,14 @@
      </div>
    </div>
    <div class="row fixed-bottom mt-5">
-         <input onclick="window.location = '/kitchen';" type="submit" name="" value="PROCEED To PAYMENT" class="btn btn-primary col rounded-0">
+         <input id="paynow" type="button" name="" data-price="{{$total_price}}" value="PROCEED To PAYMENT" class="btn btn-primary col rounded-0">
        </div>
   
 @endsection
 
 @section('footer')
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script type="text/javascript">
   //show or hide address form
   $('#show_address_field').on('click',function(){
@@ -130,6 +132,63 @@
     $('.select-time').removeClass('active');
     $(this).addClass('active');
   })
+</script>
+
+<script type="text/javascript">
+   function demoSuccessHandler(transaction) {
+        // You can write success code here. If you want to store some data in database.
+        // $("#paymentDetail").removeAttr('style');
+        // $('#paymentID').text(transaction.razorpay_payment_id);
+        // var paymentDate = new Date();
+        // $('#paymentDate').text(
+        //         padStart(paymentDate.getDate()) + '.' + padStart(paymentDate.getMonth() + 1) + '.' + paymentDate.getFullYear() + ' ' + padStart(paymentDate.getHours()) + ':' + padStart(paymentDate.getMinutes())
+        //         );
+
+        $.ajax({
+            method: 'post',
+            url: "{!!route('dopayment')!!}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "razorpay_payment_id": transaction.razorpay_payment_id
+            },
+            complete: function (r) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    /* the route pointing to the post function */
+                    url: "confirm_items",
+                    type: 'POST',
+                    /* send the csrf-token and the input to the controller */
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'JSON',
+                    /* remind that 'data' is the response of the AjaxController */
+                    success: function (data) { 
+                        if(data.status == 'success')
+                        {
+                          window.location = '/ordersentkitchen';
+                        }
+                    }
+                });
+                // console.log('complete');
+                // window.location = '/ordersentkitchen';
+                // alert('payment_done');
+                // console.log(r);
+            }
+        })
+    }
+
+
+  document.getElementById('paynow').onclick = function () {
+      var options = {
+        key: "{{ env('RAZORPAY_KEY') }}",
+        amount: $('#paynow').attr('data-price'),
+        name: 'VoilaDelivery',
+        description: 'Food Items',
+        image: '/assets/img/apple-touch-icon-ipad-retina-display.png',
+        handler: demoSuccessHandler
+    }
+      window.r = new Razorpay(options);
+        r.open()
+    }
 </script>
 
 @endsection

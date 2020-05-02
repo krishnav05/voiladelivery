@@ -135,4 +135,18 @@ class KitchenController extends Controller
     	}
 
     }
+
+    public function confirm()
+    {   
+        Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->update(['confirm_status' => 1]);
+
+
+        $response = array(
+                    'status' => 'success',
+                );
+
+        return response()->json($response); 
+    }
+
+
 }

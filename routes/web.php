@@ -45,3 +45,5 @@ Route::get('locale/{locale}',function($locale){
 Route::get('ordersentkitchen',function(){
 	return view('order_sent_kitchen');
 })->middleware('auth');
+
+Route::post('confirm_items','KitchenController@confirm');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\UserAddress;
 use Auth;
+use App\Kitchen;
+use App\CategoryItem;
 
 class AddressController extends Controller
 {
@@ -33,7 +35,20 @@ class AddressController extends Controller
     public function getDetails()
     {	
     	$all_address = UserAddress::where('user_id',Auth::user()->id)->get();
+        $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
+        $category_items = CategoryItem::all();
+        $total_price = 0;
+        foreach ($kitchen as $key) {
+                foreach ($category_items as $value) {
+                    if($key['item_id'] == $value['item_id'])
+                    {
+                        $total_price += $key['item_quantity']*$value['item_price']; 
+                    }
+                }
+            }
 
-    	return view('address',['all_address' => $all_address]);
+            $total_price*= 100;
+
+    	return view('address',['all_address' => $all_address,'total_price'=>$total_price]);
     }
 }
