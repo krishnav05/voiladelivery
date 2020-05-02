@@ -44,11 +44,11 @@
  <input type="submit" name="" value="GO TO MENU" class="btn btn-primary col mt-5" onclick="window.location = '/';">
 
 </div>
-<div class="row mt-3 text-center">
+<!-- <div class="row mt-3 text-center">
   <p class="col text-center">
    Are you facing any problem to place order? <a href="#"><img src="{{asset('assets/img/ic-call-server-2.svg')}}" class="d-inline"></a>
  </p>
-</div>
+</div> -->
 
 </div>
 
