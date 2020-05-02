@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','MenuController@getItems');
 
-Route::post('add_item','MenuController@addItem')->name('add.item')->middleware('auth');
+Route::post('add_item','MenuController@addItem')->name('add.item');
 
 Route::get('offers',function(){
 	return view('offers');
