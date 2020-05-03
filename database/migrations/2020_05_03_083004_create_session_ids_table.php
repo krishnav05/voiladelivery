@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateKitchenTable extends Migration
+class CreateSessionIdsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +13,8 @@ class CreateKitchenTable extends Migration
      */
     public function up()
     {
-        Schema::create('kitchen', function (Blueprint $table) {
-            $table->increments('id');
-            
+        Schema::create('session_ids', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ class CreateKitchenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kitchen');
+        Schema::dropIfExists('session_ids');
     }
 }

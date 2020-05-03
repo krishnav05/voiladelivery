@@ -131,7 +131,7 @@
   </div>  
   @guest
   <div class="row fixed-bottom mt-5">
-   <input type="submit" name="" value="SIGN UP OR LOGIN TO PAY" class="btn btn-primary col rounded-0">
+   <input onclick="window.location = '/login';" type="submit" name="" value="SIGN UP OR LOGIN TO PAY" class="btn btn-primary col rounded-0">
  </div>
  @else
  <div class="row fixed-bottom mt-5" id="payclass">
@@ -223,21 +223,25 @@
                     dataType: 'JSON',
                     /* remind that 'data' is the response of the AjaxController */
                     success: function (data) { 
-                        $('#paynow').attr('data-price',data.total);
-                        $(price).html(data.item_price);
                         if(data.status == 'delete')
                           {
                             window.location.reload();
                           } 
                         if(data.status == 'success')
                         { 
+                          $('#paynow').attr('data-price',data.total);
+                        $(price).html(data.item_price);
                           $(id).next('div').children('input').val(function(i, oldval) {
                             return --oldval;
                           });
                         }
                         if(data.status == 'unauthorized')
-                        {
-                          window.location = 'login';
+                        { 
+                          $('#paynow').attr('data-price',data.total);
+                        $(price).html(data.item_price);
+                          $(id).next('div').children('input').val(function(i, oldval) {
+                            return --oldval;
+                          });
                         }
                     }
                 });
@@ -256,17 +260,21 @@ $('.kitchen-plus').on('click',function(){
                     dataType: 'JSON',
                     /* remind that 'data' is the response of the AjaxController */
                     success: function (data) {
-                        $('#paynow').attr('data-price',data.total);
-                        $(price).html(data.item_price);
                         if(data.status == 'success')
                         { 
+                          $('#paynow').attr('data-price',data.total);
+                        $(price).html(data.item_price);
                           $(id).next('div').children('input').val(function(i, oldval) {
                             return ++oldval;
                           });
                         }
                         if(data.status == 'unauthorized')
                         {
-                          window.location = 'login';
+                          $('#paynow').attr('data-price',data.total);
+                        $(price).html(data.item_price);
+                          $(id).next('div').children('input').val(function(i, oldval) {
+                            return ++oldval;
+                          });
                         }
                     }
                 });

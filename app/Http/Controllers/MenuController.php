@@ -10,6 +10,8 @@ use App\HindiCategory;
 use App\HindiCategoryItems;
 use Auth;
 use Session;
+use App\SessionId;
+use App\SessionValue;
 
 class MenuController extends Controller
 {
@@ -21,9 +23,40 @@ class MenuController extends Controller
 			$category = Category::all();
 			$category_items = CategoryItem::all();
 
+			 if(!Session::has('uni_id'))
+			 {	
+			 	$newid = new SessionId;
+			 	$newid->save();
+			 	$id = $newid->id;
+			 	Session::put('uni_id',$id);
+			 	Session::save();
+			 	
+				setcookie('uni_id',$id);
+			 }
+
 			if(Auth::guest())
 			{
-				$total_quantity = 0;
+				// $total_quantity = 0;
+
+				$id =  Session::get('uni_id');
+				$total_quantity = SessionValue::where('session_id',$id)->sum('item_quantity');
+
+				$session_items = SessionValue::where('session_id',$id)->get();
+
+				foreach ($category_items as $key) {
+				# code...
+				$key['item_quantity'] = '';
+				foreach ($session_items as $keys) {
+					# code...
+					if ($key['item_id'] == $keys['item_id']) {
+						# code...
+						$key['item_quantity'] = $keys['item_quantity'];
+					}
+				}
+
+			}
+
+
 			}
 			else
 			{
@@ -57,6 +90,15 @@ class MenuController extends Controller
 			$category_items = CategoryItem::all();
 			$hindi_category = HindiCategory::all();
 			$hindi_category_items = HindiCategoryItems::all();
+
+			if(!Session::has('uni_id'))
+			 {	
+			 	$newid = new SessionId;
+			 	$newid->save();
+			 	$id = $newid->id;
+			 	Session::put('uni_id',$id);
+			 	Session::save();
+			 }
 
 			foreach ($category as $key) {
     
@@ -113,62 +155,144 @@ class MenuController extends Controller
 
 	public function addItem(Request $request)
 	{
-		if(Auth::guest()){
-			$response = array(
-            'status' => 'unauthorized',
-          	);
-        	return response()->json($response);
-		}
-		else
-		{
+		// if(Auth::guest()){
+
+		// 	//session
+		// 	$id =  Session::get('uni_id');
+
+		// 	$new = new SessionValue;
+		// 	$new->session_id = $id;
+		// 	$new->item_id = $request->item_id;
+		// 	$new->item_quantity = 1;
+		// 	$new->save()
+
+		// 	$response = array(
+  //           'status' => 'unauthorized',
+  //           'id'	=> $id,
+  //         	);
+  //       	return response()->json($response);
+		// }
+		// else
+		// {
 			if($request->action == 'add')
 			{
-				$new_item = new Kitchen;
-				$new_item->item_id = $request->item_id;
-				$new_item->item_quantity = '1';
-				$new_item->user_id = Auth::user()->id; 
-				$new_item->save();
 
-				$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
 
-				$response = array(
-					'status' => 'success',
-					'total_quantity' => $total_quantity,
-				);
-				return response()->json($response); 
+				if(Auth::guest())
+				{
+						$id =  Session::get('uni_id');
+
+						$new = new SessionValue;
+						$new->session_id = $id;
+						$new->item_id = $request->item_id;
+						$new->item_quantity = 1;
+						$new->save();
+
+						$total_quantity = SessionValue::where('session_id',$id)->sum('item_quantity');
+
+						$response = array(
+			            'status' => 'unauthorized',
+			            'total'	=> $total_quantity,
+			          	);
+			        	return response()->json($response);
+
+
+				}
+				else
+				{
+					$new_item = new Kitchen;
+					$new_item->item_id = $request->item_id;
+					$new_item->item_quantity = '1';
+					$new_item->user_id = Auth::user()->id; 
+					$new_item->save();
+
+					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
+
+					$response = array(
+						'status' => 'success',
+						'total_quantity' => $total_quantity,
+					);
+					return response()->json($response); 
+				}
+				
 			}
 			else if($request->action == 'plus')
 			{
-				Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->increment('item_quantity');
-				$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
 
-				$response = array(
-					'status' => 'success',
-					'total_quantity' => $total_quantity,
-				);
+				if(Auth::guest())
+				{
+					$id =  Session::get('uni_id');
 
-				return response()->json($response);
+					SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->increment('item_quantity');
+
+						$total_quantity = SessionValue::where('session_id',$id)->sum('item_quantity');
+
+						$response = array(
+			            'status' => 'unauthorized',
+			            'total'	=> $total_quantity,
+			          	);
+			        	return response()->json($response);
+				}
+				else
+				{
+					Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->increment('item_quantity');
+					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
+
+					$response = array(
+						'status' => 'success',
+						'total_quantity' => $total_quantity,
+					);
+
+					return response()->json($response);
+				}
+
+				
 			}
 			else if($request->action == 'minus')
 			{
-				Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->decrement('item_quantity');
 
-				$to_delete = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->pluck('item_quantity');
-
-				if($to_delete[0] == 0)
+				if(Auth::guest())
 				{
-					Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->delete();
+					$id =  Session::get('uni_id');
+
+					SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->decrement('item_quantity');
+
+					if(SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->value('item_quantity') == 0)
+					{
+						SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->delete();
+					}
+
+						$total_quantity = SessionValue::where('session_id',$id)->sum('item_quantity');
+
+						$response = array(
+			            'status' => 'unauthorized',
+			            'total'	=> $total_quantity,
+			          	);
+			        	return response()->json($response);
+				}
+				else
+				{
+					Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->decrement('item_quantity');
+
+					$to_delete = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->pluck('item_quantity');
+
+					if($to_delete[0] == 0)
+					{
+						Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->delete();
+					}
+
+					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
+
+					$response = array(
+						'status' => 'success',
+						'total_quantity' => $total_quantity,
+					);
+
+					return response()->json($response);
 				}
 
-				$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
-
-				$response = array(
-					'status' => 'success',
-					'total_quantity' => $total_quantity,
-				);
-
-				return response()->json($response);
+				
 			}	
-		}
+		// }
 	}
 }

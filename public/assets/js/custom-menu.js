@@ -62,7 +62,15 @@ $('.add-item-btn').on('click',function(){
                         }
                         if(data.status == 'unauthorized')
                         {
-                          window.location = 'login';
+                          // window.location = 'login';
+                          console.log(data.id);
+                          $(id).hide('fast');
+                          $(id).next('div').children('input').val(function(i, oldval) {
+                            return ++oldval;
+                          });
+                          $(id).next('div').show('fast');
+                          $("#kitchen_total").html(data.total);
+
                         }
                     }
                 });
@@ -95,7 +103,17 @@ $('.minus').on('click',function(){
                         }
                         if(data.status == 'unauthorized')
                         {
-                          window.location = 'login';
+                          // window.location = 'login';
+                          $(id).hide('fast');
+                          $(id).next('div').children('input').val(function(i, oldval) {
+                            return --oldval;
+                          });
+                          if($(id).next('div').children('input').val() == 0)
+                          {
+                            $(id).next('div').hide('fast');
+                            $(id).show('fast');
+                          }
+                          $("#kitchen_total").html(data.total);
                         }
                     }
                 });
@@ -124,7 +142,13 @@ $('.plus').on('click',function(){
                         }
                         if(data.status == 'unauthorized')
                         {
-                          window.location = 'login';
+                          // window.location = 'login';
+                          $(id).hide('fast');
+                          $(id).next('div').children('input').val(function(i, oldval) {
+                            return ++oldval;
+                          });
+                          $(id).next('div').show('fast');
+                          $("#kitchen_total").html(data.total);
                         }
                     }
                 });

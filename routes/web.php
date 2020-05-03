@@ -25,9 +25,9 @@ Auth::routes(['verify'=>true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::get('kitchen','KitchenController@getItems')->middleware('auth');
+Route::get('kitchen','KitchenController@getItems');
 
-Route::post('kitchen_update','KitchenController@updateItems')->middleware('auth');
+Route::post('kitchen_update','KitchenController@updateItems');
 
 Route::get('address','AddressController@getDetails')->middleware('auth');
 

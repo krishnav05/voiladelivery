@@ -7,6 +7,8 @@ use App\Kitchen;
 use App\CategoryItem;
 use Auth;
 use DB;
+use Session;
+use App\SessionValue;
 
 class KitchenController extends Controller
 {
@@ -22,9 +24,53 @@ class KitchenController extends Controller
     	if(Auth::guest())
     	{
 
+            $id =  Session::get('uni_id');
+
+            $kitchen = SessionValue::where('session_id',$id)->get();
+            if(SessionValue::where('session_id',$id)->sum('item_quantity') == 0)
+            {
+                $kitchen = null;
+            }
+            else
+            {
+                $total_price = 0;
+
+            foreach ($kitchen as $key) {
+                foreach ($category_items as $value) {
+                    if($key['item_id'] == $value['item_id'])
+                    {
+                        $total_price += $key['item_quantity']*$value['item_price']; 
+                    }
+                }
+            }
+
+            $total_price*= 100;
+            }
     	}
     	else
     	{
+            if(isset($_COOKIE['uni_id']))
+            {   //get cookie
+                $val = $_COOKIE['uni_id'];
+
+                $session_value = SessionValue::where('session_id',$val)->get();
+
+                foreach ($session_value as $key) {
+                    # code...
+                    $new = new Kitchen;
+                    $new->user_id = Auth::user()->id;
+                    $new->item_id = $key['item_id'];
+                    $new->item_quantity = $key['item_quantity'];
+                    $new->save();
+
+                    $key->delete();
+                }
+
+                //delete cookie
+                setcookie('uni_id', '', time() - 3600);
+            }
+
+
     		$kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
     		if(Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity') == 0)
     		{
@@ -55,83 +101,173 @@ class KitchenController extends Controller
     {
 
     	if($request->action == 'plus')
-    	{
-    		Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->increment('item_quantity');
+    	{   
 
-    		$item_qty = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->value('item_quantity');
+            if(Auth::guest())
+            {
+                $id = Session::get('uni_id');
 
-    		$item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
-    		$item_price = $item_price * $item_qty;
+                SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->increment('item_quantity');
 
-    		$category_items = CategoryItem::all();
-    		$kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
-    		$total_price = 0;
+                $item_qty = SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->value('item_quantity');
 
-    		foreach ($kitchen as $key) {
-    			foreach ($category_items as $value) {
-    				if($key['item_id'] == $value['item_id'])
-    				{
-    					$total_price += $key['item_quantity']*$value['item_price']; 
-    				}
-    			}
-    		}
+            $item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
+            $item_price = $item_price * $item_qty;
+            $total_price = 0;
+            $category_items = CategoryItem::all();
+            $kitchen = SessionValue::where('session_id',$id)->get();
+            foreach ($kitchen as $key) {
+                foreach ($category_items as $value) {
+                    if($key['item_id'] == $value['item_id'])
+                    {
+                        $total_price += $key['item_quantity']*$value['item_price']; 
+                    }
+                }
+            }
 
-    		$total_price*= 100;
+            $total_price*= 100;
 
 
-				$response = array(
-					'status' => 'success',
-					'item_price' => $item_price,
-					'total' => $total_price,
-				);
+                $response = array(
+                    'status' => 'unauthorized',
+                    'item_price' => $item_price,
+                    'total' => $total_price,
+                );
 
-				return response()->json($response);
+                return response()->json($response);
+
+            }
+            else{
+                Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->increment('item_quantity');
+
+            $item_qty = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->value('item_quantity');
+
+            $item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
+            $item_price = $item_price * $item_qty;
+
+            $category_items = CategoryItem::all();
+            $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
+            $total_price = 0;
+
+            foreach ($kitchen as $key) {
+                foreach ($category_items as $value) {
+                    if($key['item_id'] == $value['item_id'])
+                    {
+                        $total_price += $key['item_quantity']*$value['item_price']; 
+                    }
+                }
+            }
+
+            $total_price*= 100;
+
+
+                $response = array(
+                    'status' => 'success',
+                    'item_price' => $item_price,
+                    'total' => $total_price,
+                );
+
+                return response()->json($response);
+            }
+
+    		
     	}
 
     	if($request->action == 'minus')
     	{
-    		Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->decrement('item_quantity');
+            if(Auth::guest())
+            {
+                $id = Session::get('uni_id');
 
-				$to_delete = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->pluck('item_quantity');
+                SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->decrement('item_quantity');
 
-				if($to_delete[0] == 0)
-				{
-					Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->delete();
-					$response = array(
-					'status' => 'delete',
-				);
+                if(SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->value('item_quantity') == 0)
+                {
+                    SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->delete();
 
-				return response()->json($response);	
-				}
+                    $response = array(
+                    'status' => 'delete',
+                );
 
-				$category_items = CategoryItem::all();
-	    		$kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
-	    		$total_price = 0;
+                return response()->json($response);
+                }
 
-	    		foreach ($kitchen as $key) {
-	    			foreach ($category_items as $value) {
-	    				if($key['item_id'] == $value['item_id'])
-	    				{
-	    					$total_price += $key['item_quantity']*$value['item_price']; 
-	    				}
-	    			}
-	    		}
+            $item_qty = SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->value('item_quantity');
 
-	    		$total_price*= 100;
+            $item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
+            $item_price = $item_price * $item_qty;
+            $total_price = 0;
+            $category_items = CategoryItem::all();
+            $kitchen = SessionValue::where('session_id',$id)->get();
+            foreach ($kitchen as $key) {
+                foreach ($category_items as $value) {
+                    if($key['item_id'] == $value['item_id'])
+                    {
+                        $total_price += $key['item_quantity']*$value['item_price']; 
+                    }
+                }
+            }
+
+            $total_price*= 100;
 
 
-				$item_qty = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->value('item_quantity');
+                $response = array(
+                    'status' => 'unauthorized',
+                    'item_price' => $item_price,
+                    'total' => $total_price,
+                );
 
-	    		$item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
-	    		$item_price = $item_price * $item_qty;
+                return response()->json($response);
 
-				$response = array(
-					'status' => 'success',
-					'item_price' => $item_price,
-					'total' => $total_price,
-				);
+            }
+            else
+            {
+                Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->decrement('item_quantity');
 
-				return response()->json($response);	
+                $to_delete = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->pluck('item_quantity');
+
+                if($to_delete[0] == 0)
+                {
+                    Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->delete();
+                    $response = array(
+                    'status' => 'delete',
+                );
+
+                return response()->json($response); 
+                }
+
+                $category_items = CategoryItem::all();
+                $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
+                $total_price = 0;
+
+                foreach ($kitchen as $key) {
+                    foreach ($category_items as $value) {
+                        if($key['item_id'] == $value['item_id'])
+                        {
+                            $total_price += $key['item_quantity']*$value['item_price']; 
+                        }
+                    }
+                }
+
+                $total_price*= 100;
+
+
+                $item_qty = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->value('item_quantity');
+
+                $item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
+                $item_price = $item_price * $item_qty;
+
+                $response = array(
+                    'status' => 'success',
+                    'item_price' => $item_price,
+                    'total' => $total_price,
+                );
+
+                return response()->json($response);
+            }
+
+
+    			
     	}
 
     }
