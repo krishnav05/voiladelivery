@@ -9,7 +9,7 @@ body{
 .header-1{
 			background: url('../img/header-1-bg.png')top right no-repeat;
 			height: 260px;
-			
+    		margin-top: 8rem;
 		 }
 .header-2{
 			
