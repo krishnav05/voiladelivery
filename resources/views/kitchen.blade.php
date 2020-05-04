@@ -131,11 +131,11 @@
   </div>  
   @guest
   <div class="row fixed-bottom mt-5">
-   <input onclick="window.location = '/login';" type="submit" name="" value="SIGN UP OR LOGIN TO PAY" class="btn btn-primary col rounded-0">
+   <input onclick="window.location = '/login';" type="submit" name="" value="CONTINUE PLACE ORDER" class="btn btn-primary col rounded-0">
  </div>
  @else
  <div class="row fixed-bottom mt-5" id="payclass">
-   <input id="paynow" type="submit" name="" data-price="{{$total_price}}" value="SELECT ADDRESS,DATE AND TIME SLOT" class="btn btn-primary col rounded-0" onclick="window.location = '/address';">
+   <input id="paynow" type="submit" name="" data-price="{{$total_price}}" value="SELECT ADDRESS, DATE & TIME" class="btn btn-primary col rounded-0" onclick="window.location = '/address';">
  </div>
  @endif
 

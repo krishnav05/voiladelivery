@@ -92,7 +92,7 @@
      </div>
    </div>
    <div class="row fixed-bottom mt-5">
-         <input id="paynow" type="button" name="" data-price="{{$total_price}}" value="PROCEED To PAYMENT" class="btn btn-primary col rounded-0">
+         <input id="paynow" type="button" name="" data-price="{{$total_price}}" value="PROCEED TO PAYMENT" class="btn btn-primary col rounded-0">
        </div>
   
 @endsection
