@@ -48,7 +48,7 @@ return [
     | It will not going to send any email to the admin
     | Default : false
     */
-    'registration_notification_email' => false,
+    'registration_notification_email' => true,
 
     /*
     |--------------------------------------------------------------------------

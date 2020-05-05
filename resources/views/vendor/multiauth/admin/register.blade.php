@@ -27,6 +27,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }} row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">Phone</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="number" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('url') ? ' has-error' : '' }} row">
+                            <label for="url" class="col-md-4 col-form-label text-md-right">Restaurant Url</label>
+
+                            <div class="col-md-6">
+                                <input id="url" type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" name="url" value="{{ old('url') }}"
+                                    required>
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' text-danger' : '' }} row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
