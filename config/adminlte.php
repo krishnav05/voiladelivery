@@ -45,8 +45,8 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Voila </b>Admin',
+    'logo_img' => 'assets/img/apple-touch-icon-ipad-retina-display.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -167,9 +167,9 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin/dashboard',
 
-    'logout_url' => 'logout',
+    'logout_url' => 'admin/logout',
 
     'login_url' => 'login',
 

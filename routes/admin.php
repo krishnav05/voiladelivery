@@ -42,11 +42,11 @@
     Route::delete('activation/{admin}', 'ActivationController@deactivate');
     Route::resource('permission', 'PermissionController');
 
-    Route::get('hello',function(){
-        return 'hello';
-    })->middleware('role:super');
     Route::fallback(function () {
         return abort(404);
     });
 
+    Route::get('prepare/{id}','AdminController@prepare');
+
+    Route::post('/uploadFile', 'AdminController@uploadFile');
 
