@@ -42,8 +42,36 @@
 
 <script type="text/javascript">
  setTimeout(function(){
-   location.reload();
- },30000);
+  var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+                    /* the route pointing to the post function */
+                    url: "check_status",
+                    type: 'POST',
+                    /* send the csrf-token and the input to the controller */
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'JSON',
+                    /* remind that 'data' is the response of the AjaxController */
+                    success: function (data) { 
+                      console.log(data);
+                        if(data.status == 'preparing')
+                        {
+                          $('.fa-concierge-bell').removeClass('fa-concierge-bell').addClass('fa-check-circle');
+                        }
+                        if(data.status == 'outfor')
+                        {
+                          $('.fa-concierge-bell').removeClass('fa-concierge-bell').addClass('fa-check-circle');
+                          $('.fa-biking').removeClass('fa-biking').addClass('fa-check-circle');
+                        }
+                        if(data.status == 'delivered')
+                        {
+                          $('.fa-concierge-bell').removeClass('fa-concierge-bell').addClass('fa-check-circle');
+                          $('.fa-biking').removeClass('fa-biking').addClass('fa-check-circle');
+                          $('.fa-smile').removeClass('fa-smile').addClass('fa-check-circle');
+                          
+                        }
+                    }
+                });
+ },15000);
 </script>
 
 @endsection

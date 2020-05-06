@@ -1,0 +1,58 @@
+/*Admin order screen css start*/
+.table tr {
+    cursor: pointer;
+}
+.table{
+	background-color: #fff !important;
+}
+.hedding h1{
+	color:#fff;
+	font-size:25px;
+}
+.main-section{
+	margin-top: 120px;
+}
+.hiddenRow {
+    padding: 0 4px !important;
+    background-color: #eeeeee;
+    font-size: 13px;
+}
+.accordian-body span{
+	color:#a2a2a2 !important;
+}
+.order-status-admin a{
+						font-size: 12px;
+						border:1px solid #ccc;
+						color: #999;
+						padding: .25rem;
+						border-radius: 12px;
+						display: inline;
+				     }
+.order-status-admin a.accept{
+								color: #FFB2B2;
+								border-color: #FFB2B2 !important;
+							}
+.order-status-admin a.preparing{
+								color: #FFA500;
+								border-color: #FFA500 !important;
+							}
+.order-status-admin a.out-deliv{
+								color: #87ceeb;
+								border-color: #87ceeb !important;
+							}
+.order-status-admin a.delivered{
+								color: #82D629;
+								border-color: #82D629 !important;
+							}
+.Blink {
+  animation: blinker 1.5s cubic-bezier(.5, 0, 1, 1) infinite alternate;  
+  color: #82D629;
+  font-size:  50px;
+  position: absolute;
+  top: 38px;
+  left: 40px;
+}
+@keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

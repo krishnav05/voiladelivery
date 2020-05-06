@@ -53,13 +53,9 @@ Route::get('menu','MenuController@getItems');
 
 Route::post('add_item','MenuController@addItem')->name('add.item');
 
-Route::get('offers',function(){
-	return view('offers');
-});
-
-
-
-Route::get('home', 'HomeController@index')->name('home')->middleware('verified');
+// Route::get('offers',function(){
+// 	return view('offers');
+// });
 
 Route::get('kitchen','KitchenController@getItems')->name('kitchen');
 
@@ -84,7 +80,11 @@ Route::get('ordersentkitchen',function(){
 
 Route::post('confirm_items','KitchenController@confirm');
 
+Route::post('check_status','KitchenController@check_status');
+
 }) ; 
 
 
 Auth::routes(['verify'=>true]);
+
+Route::get('home', 'HomeController@index')->name('home')->middleware('verified');

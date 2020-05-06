@@ -46,7 +46,6 @@
         return abort(404);
     });
 
-    Route::get('prepare/{id}','AdminController@prepare');
+    Route::get('dashboard','\App\Http\Controllers\Admin\DashboardController@fetch')->middleware('auth:admin,role:super');
 
-    Route::post('/uploadFile', 'AdminController@uploadFile');
-
+    Route::get('update/{id}/{status}','\App\Http\Controllers\Admin\DashboardController@update')->middleware('auth:admin,role:super');

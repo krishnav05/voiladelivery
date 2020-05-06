@@ -312,11 +312,14 @@ class KitchenController extends Controller
         $order->amount = $request->amount;
         $order->time_slot = 1;
         $order->date = '25/21/12';
+        $order->business_id = $business_id;
+        $order->user_id = Auth::user()->id;
+        $order->address_id = 1;
         $order->save();
         $id = $order->id;
 
 
-        Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->update(['confirm_status' => 1]);
+        Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->update(['confirm_status' => 1,'order_id' => $id]);
 
 
         $response = array(
@@ -324,6 +327,42 @@ class KitchenController extends Controller
                 );
 
         return response()->json($response); 
+    }
+
+
+    public function check_status($slug)
+    {
+        $ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+        if($ifexist == null)
+        {
+            return abort(404);
+        }
+        //show tables belonging to the restraunt
+        $business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
+
+
+        if(Orders::where('user_id',Auth::user()->id)->value('order_status') == 'Preparing')
+        {
+            $response = array(
+                    'status' => 'preparing',
+                );
+        }
+        else if(Orders::where('user_id',Auth::user()->id)->value('order_status') == 'Out For Delivery')
+        {
+            $response = array(
+                    'status' => 'outfor',
+                );
+        }
+        else if(Orders::where('user_id',Auth::user()->id)->value('order_status') == 'Delivered')
+        {
+            $response = array(
+                    'status' => 'delivered',
+                );
+        }
+
+        return response()->json($response); 
+
     }
 
 
