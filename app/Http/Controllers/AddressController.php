@@ -7,12 +7,25 @@ use App\UserAddress;
 use Auth;
 use App\Kitchen;
 use App\CategoryItem;
+use Illuminate\Support\Str;
+use Bitfumes\Multiauth\Model\Admin;
 
 class AddressController extends Controller
 {
     //add new address
-    public function add(Request $request)
+    public function add($slug,Request $request)
     {
+        //check for valid url
+        $ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+        if($ifexist == null)
+        {
+            return abort(404);
+        }
+        //show tables belonging to the restraunt
+        $business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
+
+
     	$data = $request->data;
 
     	$address = new UserAddress;
@@ -32,11 +45,21 @@ class AddressController extends Controller
     }
 
 
-    public function getDetails()
+    public function getDetails($slug)
     {	
+        //check for valid url
+        $ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+        if($ifexist == null)
+        {
+            return abort(404);
+        }
+        //show tables belonging to the restraunt
+        $business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
+
     	$all_address = UserAddress::where('user_id',Auth::user()->id)->get();
-        $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
-        $category_items = CategoryItem::all();
+        $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->get();
+        $category_items = CategoryItem::where('business_id',$business_id)->get();
         $total_price = 0;
         foreach ($kitchen as $key) {
                 foreach ($category_items as $value) {

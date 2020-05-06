@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessionIdsTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateSessionIdsTable extends Migration
      */
     public function up()
     {
-        Schema::create('session_ids', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('business_id');
+            $table->string('razorpay_payment_id',255);
+            $table->float('amount');
+            $table->string('order_status')->default('Pending');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateSessionIdsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('session_ids');
+        Schema::dropIfExists('orders');
     }
 }

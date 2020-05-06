@@ -28,6 +28,18 @@ class VerificationController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+        protected function redirectTo()
+    {   
+        if(isset($_COOKIE['slug'])){
+            $title = $_COOKIE['slug'];
+        $title = '/outlet/'.$title.'/kitchen';
+
+        return $title;
+        }
+        else
+            return '/home';
+    }
+
     /**
      * Create a new controller instance.
      *

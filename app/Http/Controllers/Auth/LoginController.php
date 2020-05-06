@@ -28,6 +28,14 @@ class LoginController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected function redirectTo()
+    {
+        $title = $_COOKIE['slug'];
+        $title = '/outlet/'.$title.'/kitchen';
+
+        return $title;
+    }
+
     /**
      * Create a new controller instance.
      *

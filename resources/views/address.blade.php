@@ -6,7 +6,7 @@
    <div class="container">
     <div class="row pt-4">
             <div class="col-sm-6 text-left">
-                <a href="/kitchen" class="next-prev-menu-item"> 
+                <a href="kitchen" class="next-prev-menu-item"> 
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                   <g id="ic_left-carrot" transform="translate(67 1099) rotate(180)">
                     <g id="Rectangle_105" data-name="Rectangle 105" transform="translate(51 1083)" fill="#fff" stroke="#A8A596" stroke-width="1" opacity="0">
@@ -120,7 +120,7 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
                     /* the route pointing to the post function */
-                    url: "{!!route('add.address')!!}",
+                    url: "add_address",
                     type: 'POST',
                     /* send the csrf-token and the input to the controller */
                     data: {_token: CSRF_TOKEN, data: data},
@@ -164,25 +164,26 @@
 
         $.ajax({
             method: 'post',
-            url: "{!!route('dopayment')!!}",
+            url: "dopayment",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "razorpay_payment_id": transaction.razorpay_payment_id
             },
             complete: function (r) {
+                var amount = $('#paynow').attr('data-price');
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({
                     /* the route pointing to the post function */
                     url: "confirm_items",
                     type: 'POST',
                     /* send the csrf-token and the input to the controller */
-                    data: {_token: CSRF_TOKEN},
+                    data: {_token: CSRF_TOKEN , amount: amount ,  id:transaction.razorpay_payment_id},
                     dataType: 'JSON',
                     /* remind that 'data' is the response of the AjaxController */
                     success: function (data) { 
                         if(data.status == 'success')
                         {
-                          window.location = '/ordersentkitchen';
+                          window.location = 'ordersentkitchen';
                         }
                     }
                 });

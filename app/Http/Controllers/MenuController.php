@@ -12,33 +12,47 @@ use Auth;
 use Session;
 use App\SessionId;
 use App\SessionValue;
+use Illuminate\Support\Str;
+use Bitfumes\Multiauth\Model\Admin;
 
 class MenuController extends Controller
 {
-	public function getItems()
+	public function getItems($slug)
 	{	
+		//check for valid url
+    	$ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+    	if($ifexist == null)
+    	{
+    		return abort(404);
+    	}
+    	//show tables belonging to the restraunt
+    	$business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
+
 		if (app()->getLocale() == 'en') {
 
     	//get category list and respective items
-			$category = Category::all();
-			$category_items = CategoryItem::all();
+			$category = Category::where('business_id',$business_id)->get();
+			$category_items = CategoryItem::where('business_id',$business_id)->get();
 
-			 if(!Session::has('uni_id'))
+			 if(!Session::has($slug.'uni_id'))
 			 {	
 			 	$newid = new SessionId;
+			 	$newid->business_id = $business_id;
 			 	$newid->save();
 			 	$id = $newid->id;
-			 	Session::put('uni_id',$id);
+			 	Session::put($slug.'uni_id',$id);
 			 	Session::save();
 			 	
-				setcookie('uni_id',$id);
+				setcookie($slug.'uni_id',$id);
+				setcookie('slug',$slug,time() + 3600,'/');
 			 }
 
 			if(Auth::guest())
 			{
 				// $total_quantity = 0;
 
-				$id =  Session::get('uni_id');
+				$id =  Session::get($slug.'uni_id');
 				$total_quantity = SessionValue::where('session_id',$id)->sum('item_quantity');
 
 				$session_items = SessionValue::where('session_id',$id)->get();
@@ -60,9 +74,9 @@ class MenuController extends Controller
 			}
 			else
 			{
-				$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
+				$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->sum('item_quantity');
 
-				$kitchen_status = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
+				$kitchen_status = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->get();
 
 				foreach ($category_items as $key) {
 				# code...
@@ -86,18 +100,22 @@ class MenuController extends Controller
 
 		else if (app()->getLocale() == 'hi') {
 			
-			$category = Category::all();
-			$category_items = CategoryItem::all();
-			$hindi_category = HindiCategory::all();
-			$hindi_category_items = HindiCategoryItems::all();
+			$category = Category::where('business_id',$business_id)->get();
+			$category_items = CategoryItem::where('business_id',$business_id)->get();
+			$hindi_category = HindiCategory::where('business_id',$business_id)->get();
+			$hindi_category_items = HindiCategoryItems::where('business_id',$business_id)->get();
 
-			if(!Session::has('uni_id'))
+			if(!Session::has($slug.'uni_id'))
 			 {	
 			 	$newid = new SessionId;
+			 	$newid->business_id = $business_id;
 			 	$newid->save();
 			 	$id = $newid->id;
-			 	Session::put('uni_id',$id);
+			 	Session::put($slug.'uni_id',$id);
 			 	Session::save();
+
+			 	setcookie($slug.'uni_id',$id);
+				setcookie('slug',$slug,time() + 3600,'/');
 			 }
 
 			foreach ($category as $key) {
@@ -128,9 +146,9 @@ class MenuController extends Controller
 			}
 			else
 			{
-				$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
+				$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->sum('item_quantity');
 
-				$kitchen_status = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
+				$kitchen_status = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->get();
 
 				foreach ($category_items as $key) {
 				# code...
@@ -153,7 +171,7 @@ class MenuController extends Controller
 
 	}
 
-	public function addItem(Request $request)
+	public function addItem($slug,Request $request)
 	{
 		// if(Auth::guest()){
 
@@ -174,13 +192,22 @@ class MenuController extends Controller
 		// }
 		// else
 		// {
+		$ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+    	if($ifexist == null)
+    	{
+    		return abort(404);
+    	}
+    	//show tables belonging to the restraunt
+    	$business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
+
 			if($request->action == 'add')
 			{
 
 
 				if(Auth::guest())
 				{
-						$id =  Session::get('uni_id');
+						$id =  Session::get($slug.'uni_id');
 
 						$new = new SessionValue;
 						$new->session_id = $id;
@@ -203,10 +230,11 @@ class MenuController extends Controller
 					$new_item = new Kitchen;
 					$new_item->item_id = $request->item_id;
 					$new_item->item_quantity = '1';
+					$new_item->business_id = $business_id;
 					$new_item->user_id = Auth::user()->id; 
 					$new_item->save();
 
-					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
+					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->sum('item_quantity');
 
 					$response = array(
 						'status' => 'success',
@@ -221,7 +249,7 @@ class MenuController extends Controller
 
 				if(Auth::guest())
 				{
-					$id =  Session::get('uni_id');
+					$id =  Session::get($slug.'uni_id');
 
 					SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->increment('item_quantity');
 
@@ -235,8 +263,8 @@ class MenuController extends Controller
 				}
 				else
 				{
-					Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->increment('item_quantity');
-					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
+					Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->increment('item_quantity');
+					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('business_id',$business_id)->where('confirm_status',null)->sum('item_quantity');
 
 					$response = array(
 						'status' => 'success',
@@ -253,7 +281,7 @@ class MenuController extends Controller
 
 				if(Auth::guest())
 				{
-					$id =  Session::get('uni_id');
+					$id =  Session::get($slug.'uni_id');
 
 					SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->decrement('item_quantity');
 
@@ -272,16 +300,16 @@ class MenuController extends Controller
 				}
 				else
 				{
-					Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->decrement('item_quantity');
+					Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->decrement('item_quantity');
 
-					$to_delete = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->pluck('item_quantity');
+					$to_delete = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->pluck('item_quantity');
 
 					if($to_delete[0] == 0)
 					{
-						Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->delete();
+						Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->delete();
 					}
 
-					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity');
+					$total_quantity = Kitchen::where('user_id',Auth::user()->id)->where('business_id',$business_id)->where('confirm_status',null)->sum('item_quantity');
 
 					$response = array(
 						'status' => 'success',

@@ -9,13 +9,26 @@ use Auth;
 use DB;
 use Session;
 use App\SessionValue;
+use Illuminate\Support\Str;
+use Bitfumes\Multiauth\Model\Admin;
+use App\Orders;
 
 class KitchenController extends Controller
 {
     
-    public function getItems()
-    {
-    	$category_items = CategoryItem::all();
+    public function getItems($slug)
+    {   
+        //check for valid url
+        $ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+        if($ifexist == null)
+        {
+            return abort(404);
+        }
+        //show tables belonging to the restraunt
+        $business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
+
+    	$category_items = CategoryItem::where('business_id',$business_id)->get();
     	$kitchen = null;
     	//serial number counter
     	$count = 1;
@@ -24,7 +37,7 @@ class KitchenController extends Controller
     	if(Auth::guest())
     	{
 
-            $id =  Session::get('uni_id');
+            $id =  Session::get($slug.'uni_id');
 
             $kitchen = SessionValue::where('session_id',$id)->get();
             if(SessionValue::where('session_id',$id)->sum('item_quantity') == 0)
@@ -49,9 +62,9 @@ class KitchenController extends Controller
     	}
     	else
     	{
-            if(isset($_COOKIE['uni_id']))
+            if(isset($_COOKIE[$slug.'uni_id']))
             {   //get cookie
-                $val = $_COOKIE['uni_id'];
+                $val = $_COOKIE[$slug.'uni_id'];
 
                 $session_value = SessionValue::where('session_id',$val)->get();
 
@@ -59,6 +72,7 @@ class KitchenController extends Controller
                     # code...
                     $new = new Kitchen;
                     $new->user_id = Auth::user()->id;
+                    $new->business_id = $business_id;
                     $new->item_id = $key['item_id'];
                     $new->item_quantity = $key['item_quantity'];
                     $new->save();
@@ -67,12 +81,12 @@ class KitchenController extends Controller
                 }
 
                 //delete cookie
-                setcookie('uni_id', '', time() - 3600);
+                setcookie($slug.'uni_id', '', time() - 3600);
             }
 
 
-    		$kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
-    		if(Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->sum('item_quantity') == 0)
+    		$kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->get();
+    		if(Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->sum('item_quantity') == 0)
     		{
     			$kitchen = null;
     		}
@@ -97,24 +111,34 @@ class KitchenController extends Controller
     	return view('kitchen',['category_items' => $category_items,'kitchen' => $kitchen,'count' => $count,'total_price' => $total_price]);
     }
 
-    public function updateItems(Request $request)
+    public function updateItems($slug,Request $request)
     {
+        $ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+        if($ifexist == null)
+        {
+            return abort(404);
+        }
+        //show tables belonging to the restraunt
+        $business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
+
+
 
     	if($request->action == 'plus')
     	{   
 
             if(Auth::guest())
             {
-                $id = Session::get('uni_id');
+                $id = Session::get($slug.'uni_id');
 
                 SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->increment('item_quantity');
 
                 $item_qty = SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->value('item_quantity');
 
-            $item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
+            $item_price = CategoryItem::where('item_id',$request->item_id)->where('business_id',$business_id)->value('item_price');
             $item_price = $item_price * $item_qty;
             $total_price = 0;
-            $category_items = CategoryItem::all();
+            $category_items = CategoryItem::where('business_id',$business_id)->get();
             $kitchen = SessionValue::where('session_id',$id)->get();
             foreach ($kitchen as $key) {
                 foreach ($category_items as $value) {
@@ -138,15 +162,15 @@ class KitchenController extends Controller
 
             }
             else{
-                Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->increment('item_quantity');
+                Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->increment('item_quantity');
 
-            $item_qty = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->value('item_quantity');
+            $item_qty = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->value('item_quantity');
 
-            $item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
+            $item_price = CategoryItem::where('item_id',$request->item_id)->where('business_id',$business_id)->value('item_price');
             $item_price = $item_price * $item_qty;
 
-            $category_items = CategoryItem::all();
-            $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
+            $category_items = CategoryItem::where('business_id',$business_id)->get();
+            $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->get();
             $total_price = 0;
 
             foreach ($kitchen as $key) {
@@ -177,7 +201,7 @@ class KitchenController extends Controller
     	{
             if(Auth::guest())
             {
-                $id = Session::get('uni_id');
+                $id = Session::get($slug.'uni_id');
 
                 SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->decrement('item_quantity');
 
@@ -194,10 +218,10 @@ class KitchenController extends Controller
 
             $item_qty = SessionValue::where('session_id',$id)->where('item_id',$request->item_id)->value('item_quantity');
 
-            $item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
+            $item_price = CategoryItem::where('item_id',$request->item_id)->where('business_id',$business_id)->value('item_price');
             $item_price = $item_price * $item_qty;
             $total_price = 0;
-            $category_items = CategoryItem::all();
+            $category_items = CategoryItem::where('business_id',$business_id)->get();
             $kitchen = SessionValue::where('session_id',$id)->get();
             foreach ($kitchen as $key) {
                 foreach ($category_items as $value) {
@@ -222,13 +246,13 @@ class KitchenController extends Controller
             }
             else
             {
-                Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->decrement('item_quantity');
+                Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->decrement('item_quantity');
 
-                $to_delete = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->pluck('item_quantity');
+                $to_delete = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->pluck('item_quantity');
 
                 if($to_delete[0] == 0)
                 {
-                    Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->delete();
+                    Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->delete();
                     $response = array(
                     'status' => 'delete',
                 );
@@ -236,8 +260,8 @@ class KitchenController extends Controller
                 return response()->json($response); 
                 }
 
-                $category_items = CategoryItem::all();
-                $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->get();
+                $category_items = CategoryItem::where('business_id',$business_id)->get();
+                $kitchen = Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->get();
                 $total_price = 0;
 
                 foreach ($kitchen as $key) {
@@ -252,9 +276,9 @@ class KitchenController extends Controller
                 $total_price*= 100;
 
 
-                $item_qty = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->value('item_quantity');
+                $item_qty = Kitchen::where('user_id',Auth::user()->id)->where('item_id',$request->item_id)->where('confirm_status',null)->where('business_id',$business_id)->value('item_quantity');
 
-                $item_price = CategoryItem::where('item_id',$request->item_id)->value('item_price');
+                $item_price = CategoryItem::where('item_id',$request->item_id)->where('business_id',$business_id)->value('item_price');
                 $item_price = $item_price * $item_qty;
 
                 $response = array(
@@ -272,9 +296,27 @@ class KitchenController extends Controller
 
     }
 
-    public function confirm()
-    {   
-        Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->update(['confirm_status' => 1]);
+    public function confirm($slug,Request $request)
+    {  
+        $ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+        if($ifexist == null)
+        {
+            return abort(404);
+        }
+        //show tables belonging to the restraunt
+        $business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
+
+        $order = new Orders;
+        $order->razorpay_payment_id = $request->id;
+        $order->amount = $request->amount;
+        $order->time_slot = 1;
+        $order->date = '25/21/12';
+        $order->save();
+        $id = $order->id;
+
+
+        Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->update(['confirm_status' => 1]);
 
 
         $response = array(

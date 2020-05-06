@@ -7,7 +7,7 @@
 <div class="container">
  <div class="row pt-4">
   <div class="col-sm-6 text-left">
-    <a href="../" class="next-prev-menu-item"> 
+    <a href="menu" class="next-prev-menu-item"> 
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
         <g id="ic_left-carrot" transform="translate(67 1099) rotate(180)">
           <g id="Rectangle_105" data-name="Rectangle 105" transform="translate(51 1083)" fill="#fff" stroke="#A8A596" stroke-width="1" opacity="0">
@@ -41,7 +41,7 @@
 
 
 <div class="row fixed-bottom">
- <input type="submit" name="" value="GO TO MENU" onclick="window.location = '/';" class="btn btn-primary col rounded-0">
+ <input type="submit" name="" value="GO TO MENU" onclick="window.location = 'menu';" class="btn btn-primary col rounded-0">
 
 </div>
 <!-- <div class="row mt-3 text-center">
@@ -56,7 +56,7 @@
 <div class="container">
  <div class="row pt-4">
   <div class="col-sm-6 text-left">
-    <a href="../" class="next-prev-menu-item"> 
+    <a href="menu" class="next-prev-menu-item"> 
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
         <g id="ic_left-carrot" transform="translate(67 1099) rotate(180)">
           <g id="Rectangle_105" data-name="Rectangle 105" transform="translate(51 1083)" fill="#fff" stroke="#A8A596" stroke-width="1" opacity="0">
@@ -135,7 +135,7 @@
  </div>
  @else
  <div class="row fixed-bottom mt-5" id="payclass">
-   <input id="paynow" type="submit" name="" data-price="{{$total_price}}" value="SELECT ADDRESS, DATE & TIME" class="btn btn-primary col rounded-0" onclick="window.location = '/address';">
+   <input id="paynow" type="submit" name="" data-price="{{$total_price}}" value="SELECT ADDRESS, DATE & TIME" class="btn btn-primary col rounded-0" onclick="window.location = 'address';">
  </div>
  @endif
 
@@ -179,7 +179,7 @@
 
     //     $.ajax({
     //         method: 'post',
-    //         url: "{!!route('dopayment')!!}",
+    //         
     //         data: {
     //             "_token": "{{ csrf_token() }}",
     //             "razorpay_payment_id": transaction.razorpay_payment_id
