@@ -310,11 +310,11 @@ class KitchenController extends Controller
         $order = new Orders;
         $order->razorpay_payment_id = $request->id;
         $order->amount = $request->amount;
-        $order->time_slot = 1;
-        $order->date = '25/21/12';
+        $order->time_slot = $request->timeid;
+        $order->date = $request->date;
         $order->business_id = $business_id;
         $order->user_id = Auth::user()->id;
-        $order->address_id = 1;
+        $order->address_id = $request->address;
         $order->save();
         $id = $order->id;
 

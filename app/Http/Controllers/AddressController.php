@@ -9,6 +9,7 @@ use App\Kitchen;
 use App\CategoryItem;
 use Illuminate\Support\Str;
 use Bitfumes\Multiauth\Model\Admin;
+use App\TimeSlots;
 
 class AddressController extends Controller
 {
@@ -72,6 +73,9 @@ class AddressController extends Controller
 
             $total_price*= 100;
 
-    	return view('address',['all_address' => $all_address,'total_price'=>$total_price]);
+
+        $timeslots = TimeSlots::where('business_id',$business_id)->get();
+
+    	return view('address',['all_address' => $all_address,'total_price'=>$total_price,'timeslots' => $timeslots]);
     }
 }

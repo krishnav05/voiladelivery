@@ -46,6 +46,16 @@
         return abort(404);
     });
 
-    Route::get('dashboard','\App\Http\Controllers\Admin\DashboardController@fetch')->middleware('auth:admin,role:super');
+    Route::get('dashboard','\App\Http\Controllers\Admin\DashboardController@fetch')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
-    Route::get('update/{id}/{status}','\App\Http\Controllers\Admin\DashboardController@update')->middleware('auth:admin,role:super');
+    Route::get('update/{id}/{status}','\App\Http\Controllers\Admin\DashboardController@update')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::get('upload','\App\Http\Controllers\Admin\UploadController@index')->middleware('auth:admin')->middleware('role:super;restaturaa');
+    
+    Route::post('uploadCategory', '\App\Http\Controllers\Admin\UploadController@uploadCategory')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::post('uploadCategoryItem', '\App\Http\Controllers\Admin\UploadController@uploadCategoryItem')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::post('uploadHindiCategory', '\App\Http\Controllers\Admin\UploadController@uploadHindiCategory')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::post('uploadHindiCategoryItems', '\App\Http\Controllers\Admin\UploadController@uploadHindiCategoryItems')->middleware('auth:admin')->middleware('role:super;restaturaa');

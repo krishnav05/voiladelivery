@@ -34,7 +34,7 @@
     @if($loop->first)
     <div class="row">
       <div class="col"><p>
-        <input class="check" type="checkbox" checked="checked" name="" id="{{$key['id']}}">
+        <input class="check" type="checkbox" checked="checked" name="address_check" id="{{$key['id']}}">
         {{$key['name']}} , 
         {{$key['flat_number']}} ,
         {{$key['society']}} ,
@@ -46,7 +46,7 @@
     @else
     <div class="row">
       <div class="col"><p>
-        <input class="check" type="checkbox" name="" id="{{$key['id']}}">
+        <input class="check" type="checkbox" name="address_check" id="{{$key['id']}}">
         {{$key['name']}} , 
         {{$key['flat_number']}} ,
         {{$key['society']}} ,
@@ -79,15 +79,20 @@
        <h2 class="col-sm-12">Delivery Date/Time</h2>
        <div class="col mt-3">
         <p style="color: #999;">Select Date</p>
-         <a class="select-date active">2020-04-26</a>
-         <a class="select-date">2020-05-03</a>
-         <a class="select-date">2020-05-04</a>
-         <a class="select-date">2020-05-05</a>
+         <a class="select-date active" data-value="{{  now()->toDateString() }}">{{  now()->toDateString() }}</a>
+         <a class="select-date" data-value="{{  now()->addDays(1)->toDateString() }}">{{  now()->addDays(1)->toDateString() }}</a>
+         <a class="select-date" data-value="{{  now()->addDays(2)->toDateString() }}">{{  now()->addDays(2)->toDateString() }}</a>
+         <a class="select-date" data-value="{{  now()->addDays(3)->toDateString() }}">{{  now()->addDays(3)->toDateString() }}</a>
        </div>
        <div class="col mt-3">
         <p style="color: #999;">Select Date</p>
-         <a class="select-time active">10 AM TO 1 PM</a>
-         <a class="select-time">2 PM TO 6 PM</a>
+        @foreach($timeslots as $tslots)
+        @if($loop->first)
+         <a class="select-time active" id="{{$tslots['id']}}">{{$tslots['details']}}</a>
+        @else
+        <a class="select-time" id="{{$tslots['id']}}">{{$tslots['details']}}</a>
+        @endif
+        @endforeach
        </div>
      </div>
    </div>
@@ -172,12 +177,15 @@
             complete: function (r) {
                 var amount = $('#paynow').attr('data-price');
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                var timeid = $('.select-time.active').attr('id');
+                var address = $("input:checkbox[name=address_check]:checked").attr('id');
+                var date = $('.select-date.active').attr('data-value');
                 $.ajax({
                     /* the route pointing to the post function */
                     url: "confirm_items",
                     type: 'POST',
                     /* send the csrf-token and the input to the controller */
-                    data: {_token: CSRF_TOKEN , amount: amount ,  id:transaction.razorpay_payment_id},
+                    data: {_token: CSRF_TOKEN , amount: amount ,  id:transaction.razorpay_payment_id,timeid:timeid,address:address,date:date},
                     dataType: 'JSON',
                     /* remind that 'data' is the response of the AjaxController */
                     success: function (data) { 
@@ -197,7 +205,8 @@
 
 
   document.getElementById('paynow').onclick = function () {
-
+// alert($("input:checkbox[name=address_check]:checked").attr('id'));
+// alert($('.select-date.active').attr('data-value'));
     if ($('input[type=checkbox]').is(":checked")) {
       //any one is checked
        var options = {

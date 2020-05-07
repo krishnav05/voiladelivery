@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    Please Open The restraunt link from sms to see the menu
                     You are logged in!
                 </div>
             </div>

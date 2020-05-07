@@ -41,6 +41,7 @@
 <script src="https://kit.fontawesome.com/2659e6167d.js" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+ function load(){
  setTimeout(function(){
   var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
@@ -70,8 +71,13 @@
                           
                         }
                     }
+                }).always(function(){
+                  load();
                 });
  },15000);
+}
+
+load();
 </script>
 
 @endsection
