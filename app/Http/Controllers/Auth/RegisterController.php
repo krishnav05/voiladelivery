@@ -31,13 +31,13 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-        protected function redirectTo()
-    {
-        $title = $_COOKIE['slug'];
-        $title = '/outlet/'.$title.'/kitchen';
+    //     protected function redirectTo()
+    // {
+    //     $title = $_COOKIE['slug'];
+    //     $title = '/outlet/'.$title.'/kitchen';
 
-        return $title;
-    }
+    //     return $title;
+    // }
     
     /**
      * Create a new controller instance.
@@ -76,6 +76,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'phone' => $data['phone'],
         ]);
     }
 }
