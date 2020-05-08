@@ -29,8 +29,8 @@
            <h1>Select Address, Date & Time</h1>
          </div>
     </div>
-    <h2 class="col-sm-12">Select Address</h2>
     @if(!$all_address->isEmpty())
+    <h5 class="col-sm-12 mt-2">Select Address</h5>
     @foreach($all_address as $key)
     @if($loop->first)
     <div class="row">
