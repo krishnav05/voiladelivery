@@ -219,6 +219,13 @@ return [
             'can'  => 'manage-blog',
         ],
         [
+            'text'        => 'Dashboard',
+            'url'         => 'admin/dashboard',
+            'icon'        => 'fas fa-tasks',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
             'text'        => 'Upload',
             'url'         => 'admin/upload',
             'icon'        => 'far fa-fw fa-file',
@@ -233,7 +240,7 @@ return [
         ],
         [
             'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/password/change',
             'icon' => 'fas fa-fw fa-lock',
         ],
         // [

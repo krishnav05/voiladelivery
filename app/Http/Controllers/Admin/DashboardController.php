@@ -50,4 +50,9 @@ class DashboardController extends Controller
 		return redirect()->back();
 	}
 
+	public function settings()
+	{
+		return view('admin.settings');
+	}
+
 }

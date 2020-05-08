@@ -1,11 +1,12 @@
-@extends('multiauth::layouts.app') 
+@extends('adminlte::page')
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ ucfirst(config('multiauth.prefix')) }} Change Your Password</div>
-
+                <div class="card-header">Change Your Password</div>
+                @include('multiauth::message')
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.password.change') }}" aria-label="{{ __('Admin Change Password') }}">
                         @csrf

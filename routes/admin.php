@@ -12,8 +12,8 @@
     Route::POST('/password/reset', 'ResetPasswordController@reset');
     Route::GET('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('admin.password.reset');
     Route::GET('/password/change', 'AdminController@showChangePasswordForm')->name('admin.password.change');
-    Route::POST('/password/change', 'AdminController@changePassword');
-
+    // Route::POST('/password/change', 'AdminController@changePassword');
+    Route::POST('/password/change', '\App\Http\Controllers\Admin\AdminController@changePassword')->middleware('auth:admin')->middleware('role:super;restaturaa');
     // Register Admins
     Route::get('/register', 'RegisterController@showRegistrationForm')->name('admin.register');
     Route::post('/register', 'RegisterController@register');
@@ -59,3 +59,5 @@
     Route::post('uploadHindiCategory', '\App\Http\Controllers\Admin\UploadController@uploadHindiCategory')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
     Route::post('uploadHindiCategoryItems', '\App\Http\Controllers\Admin\UploadController@uploadHindiCategoryItems')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::get('settings','\App\Http\Controllers\Admin\DashboardController@settings')->middleware('auth:admin')->middleware('role:super;restaturaa');
