@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('content')
-<body>
+<body class="kitchen-bg">
 @if($kitchen == null)
 
 <div class="container">
@@ -131,7 +131,7 @@
   </div>  
   @guest
   <div class="row fixed-bottom mt-5">
-   <input onclick="window.location = '/login';" type="submit" name="" value="CONTINUE PLACE ORDER" class="btn btn-primary col rounded-0">
+   <input onclick="window.location = '/login';" type="submit" name="" value="CONTINUE TO PLACE ORDER" class="btn btn-primary col rounded-0">
  </div>
  @else
  <div class="row fixed-bottom mt-5" id="payclass">
