@@ -29,6 +29,7 @@
            <h1>Select Address, Date & Time</h1>
          </div>
     </div>
+    <h2 class="col-sm-12">Select Address</h2>
     @if(!$all_address->isEmpty())
     @foreach($all_address as $key)
     @if($loop->first)
@@ -85,7 +86,7 @@
          <a class="select-date" data-value="{{  now()->addDays(3)->toDateString() }}">{{  now()->addDays(3)->toDateString() }}</a>
        </div>
        <div class="col mt-3">
-        <p style="color: #999;">Select Date</p>
+        <p style="color: #999;">Select Time</p>
         @foreach($timeslots as $tslots)
         @if($loop->first)
          <a class="select-time active" id="{{$tslots['id']}}">{{$tslots['details']}}</a>
