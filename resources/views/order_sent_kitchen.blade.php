@@ -15,18 +15,18 @@
   <div class="container">
     <div class="row">
        <div class="col-sm-12 delivery-time">
-        <p class="pt-1"> Your order will be delivered to you in <span>45 minutes</span>. In case of contact Call Us at <a href="tel:+919667555094">+919667555094</a></p>
+        <p class="pt-1"> Your order number {{$cookie}} will be delivered to you in <span>45 minutes</span>. In case of contact Call Us at <a href="tel:+919667555094">+919667555094</a></p>
       </div>
-      <div class="col-sm-12 order-status clicked">
+      <div class="col-sm-12 order-status active" id="recieved">
         <p> Order Received   <i class="fas fa-check-circle float-right fa-2x"></i> </p>
       </div>
-      <div class="col-sm-12 order-status active">
+      <div class="col-sm-12 order-status" id="preparing">
         <p> Preparing Order <i class="fas fa-concierge-bell float-right fa-2x"></i></p>
       </div>
-      <div class="col-sm-12 order-status">
+      <div class="col-sm-12 order-status" id="outfor">
         <p> Out For Delivery  <i class="fas fa-biking float-right fa-2x"></i> </p>
       </div>
-      <div class="col-sm-12 order-status">
+      <div class="col-sm-12 order-status" id="delivered">
         <p> Delivered  <i class="far fa-smile float-right fa-2x"></i> </p>
       </div>
     </div>
@@ -53,22 +53,24 @@
                     dataType: 'JSON',
                     /* remind that 'data' is the response of the AjaxController */
                     success: function (data) { 
-                      console.log(data);
+                      // console.log(data);
                         if(data.status == 'preparing')
                         {
-                          $('.fa-concierge-bell').removeClass('fa-concierge-bell').addClass('fa-check-circle');
+                          $('#recieved').removeClass('active');
+                          $('#recieved').addClass('clicked');
+                          $('#preparing').addClass('active');
                         }
                         if(data.status == 'outfor')
                         {
-                          $('.fa-concierge-bell').removeClass('fa-concierge-bell').addClass('fa-check-circle');
-                          $('.fa-biking').removeClass('fa-biking').addClass('fa-check-circle');
+                          $('#preparing').removeClass('active');
+                          $('#preparing').addClass('clicked');
+                          $('#outfor').addClass('active');
                         }
                         if(data.status == 'delivered')
                         {
-                          $('.fa-concierge-bell').removeClass('fa-concierge-bell').addClass('fa-check-circle');
-                          $('.fa-biking').removeClass('fa-biking').addClass('fa-check-circle');
-                          $('.fa-smile').removeClass('fa-smile').addClass('fa-check-circle');
-                          
+                          $('#outfor').removeClass('active');
+                          $('#outfor').addClass('clicked');
+                          $('#delivered').addClass('active');
                         }
                     }
                 }).always(function(){

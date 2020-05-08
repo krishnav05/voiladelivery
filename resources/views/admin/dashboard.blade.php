@@ -29,7 +29,7 @@
             	@if($uaddress['id'] == $order['address_id'])
               <tr colspan="7" data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
                     <td>{{$count++}} <span class="Blink">&bull;</span> </td>
-                    <td>oberoi-outlet-12</td>
+                    <td>{{$order['id']}}</td>
                     <td>{{$userid['name']}}</td>
                     <td>{{$userid['phone']}}</td>
                     <td> View Items +</td>

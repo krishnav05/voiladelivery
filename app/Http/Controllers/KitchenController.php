@@ -318,7 +318,7 @@ class KitchenController extends Controller
         $order->save();
         $id = $order->id;
 
-
+        setcookie('orderid',$id);
         Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->where('business_id',$business_id)->update(['confirm_status' => 1,'order_id' => $id]);
 
 
@@ -342,19 +342,19 @@ class KitchenController extends Controller
         $business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
 
 
-        if(Orders::where('user_id',Auth::user()->id)->value('order_status') == 'Preparing')
+        if(Orders::where('id',$_COOKIE['orderid'])->value('order_status') == 'Preparing')
         {
             $response = array(
                     'status' => 'preparing',
                 );
         }
-        else if(Orders::where('user_id',Auth::user()->id)->value('order_status') == 'Out For Delivery')
+        else if(Orders::where('id',$_COOKIE['orderid'])->value('order_status') == 'Out For Delivery')
         {
             $response = array(
                     'status' => 'outfor',
                 );
         }
-        else if(Orders::where('user_id',Auth::user()->id)->value('order_status') == 'Delivered')
+        else if(Orders::where('id',$_COOKIE['orderid'])->value('order_status') == 'Delivered')
         {
             $response = array(
                     'status' => 'delivered',
@@ -365,5 +365,12 @@ class KitchenController extends Controller
 
     }
 
+
+    public function ordersentkitchen()
+    {
+        $cookie = $_COOKIE['orderid'];
+
+        return view('order_sent_kitchen',['cookie'=>$cookie]);
+    }
 
 }
