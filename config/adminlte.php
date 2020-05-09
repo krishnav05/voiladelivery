@@ -226,6 +226,13 @@ return [
             'label_color' => 'success',
         ],
         [
+            'text'        => 'Past Orders',
+            'url'         => 'admin/past_orders',
+            'icon'        => 'fas fa-check',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
             'text'        => 'Menu Upload',
             'url'         => 'admin/upload',
             'icon'        => 'far fa-fw fa-file',

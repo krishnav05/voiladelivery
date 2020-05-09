@@ -22,11 +22,11 @@
                 </tr>
             </thead>
             <tbody>
-            	@foreach($orders as $order)
-            	@foreach($user as $userid)
-            	@if($userid['id'] == $order['user_id'])
-            	@foreach($useraddress as $uaddress)
-            	@if($uaddress['id'] == $order['address_id'])
+              @foreach($orders as $order)
+              @foreach($user as $userid)
+              @if($userid['id'] == $order['user_id'])
+              @foreach($useraddress as $uaddress)
+              @if($uaddress['id'] == $order['address_id'])
               <tr colspan="7" data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
                     <td>{{$count++}} <span class="Blink">&bull;</span> </td>
                     <td>{{$order['id']}}</td>
@@ -34,34 +34,35 @@
                     <td>{{$userid['phone']}}</td>
                     <td> View Items +</td>
                     <td>Online Success</td>
-                    <td class="order-status-admin"> 
-                    	@if($order['order_status'] == 'Pending')
-                    	<a href="update/{{$order['id']}}/accept">Accept</a> 
-                    	<a href="update/{{$order['id']}}/preparing">Preparing</a>
-                    	 <a href="update/{{$order['id']}}/out-deliv">Out For Delivery</a> 
-                    	 <a href="update/{{$order['id']}}/delivered">Delivered</a>
-                    	 @elseif($order['order_status'] == 'Accepted')
-                    	 <a href="update/{{$order['id']}}/accept" class="accept">Accept</a> 
-                    	<a href="update/{{$order['id']}}/preparing">Preparing</a>
-                    	 <a href="update/{{$order['id']}}/out-deliv">Out For Delivery</a> 
-                    	 <a href="update/{{$order['id']}}/delivered">Delivered</a>
-                    	 @elseif($order['order_status'] == 'Preparing')
-                    	 <a href="update/{{$order['id']}}/accept" class="accept">Accept</a> 
-                    	<a href="update/{{$order['id']}}/preparing" class="preparing">Preparing</a>
-                    	 <a href="update/{{$order['id']}}/out-deliv">Out For Delivery</a> 
-                    	 <a href="update/{{$order['id']}}/delivered">Delivered</a>
-                    	 @elseif($order['order_status'] == 'Out For Delivery')
-                    	 <a href="update/{{$order['id']}}/accept" class="accept">Accept</a> 
-                    	<a href="update/{{$order['id']}}/preparing" class="preparing">Preparing</a>
-                    	 <a href="update/{{$order['id']}}/out-deliv" class="out-deliv">Out For Delivery</a> 
-                    	 <a href="update/{{$order['id']}}/delivered">Delivered</a>
-                    	 @elseif($order['order_status'] == 'Delivered')
-                    	  <a href="update/{{$order['id']}}/accept" class="accept">Accept</a> 
-                    	<a href="update/{{$order['id']}}/preparing" class="preparing">Preparing</a>
-                    	 <a href="update/{{$order['id']}}/out-deliv" class="out-deliv">Out For Delivery</a> 
-                    	 <a href="update/{{$order['id']}}/delivered" class="delivered">Delivered</a>
-                    	 @endif 
-                    	</td>
+                    <td>Delivered</td>
+                    <!-- <td class="order-status-admin"> 
+                      @if($order['order_status'] == 'Pending')
+                      <a href="update/{{$order['id']}}/accept">Accept</a> 
+                      <a href="update/{{$order['id']}}/preparing">Preparing</a>
+                       <a href="update/{{$order['id']}}/out-deliv">Out For Delivery</a> 
+                       <a href="update/{{$order['id']}}/delivered">Delivered</a>
+                       @elseif($order['order_status'] == 'Accepted')
+                       <a href="update/{{$order['id']}}/accept" class="accept">Accept</a> 
+                      <a href="update/{{$order['id']}}/preparing">Preparing</a>
+                       <a href="update/{{$order['id']}}/out-deliv">Out For Delivery</a> 
+                       <a href="update/{{$order['id']}}/delivered">Delivered</a>
+                       @elseif($order['order_status'] == 'Preparing')
+                       <a href="update/{{$order['id']}}/accept" class="accept">Accept</a> 
+                      <a href="update/{{$order['id']}}/preparing" class="preparing">Preparing</a>
+                       <a href="update/{{$order['id']}}/out-deliv">Out For Delivery</a> 
+                       <a href="update/{{$order['id']}}/delivered">Delivered</a>
+                       @elseif($order['order_status'] == 'Out For Delivery')
+                       <a href="update/{{$order['id']}}/accept" class="accept">Accept</a> 
+                      <a href="update/{{$order['id']}}/preparing" class="preparing">Preparing</a>
+                       <a href="update/{{$order['id']}}/out-deliv" class="out-deliv">Out For Delivery</a> 
+                       <a href="update/{{$order['id']}}/delivered">Delivered</a>
+                       @elseif($order['order_status'] == 'Delivered')
+                        <a href="update/{{$order['id']}}/accept" class="accept">Accept</a> 
+                      <a href="update/{{$order['id']}}/preparing" class="preparing">Preparing</a>
+                       <a href="update/{{$order['id']}}/out-deliv" class="out-deliv">Out For Delivery</a> 
+                       <a href="update/{{$order['id']}}/delivered" class="delivered">Delivered</a>
+                       @endif 
+                      </td> -->
                 </tr>
                 <tr class="p">
                     <td colspan="7" class="hiddenRow">
@@ -103,7 +104,7 @@
     </tr>
   </tbody>
 </table>
-                        	
+                          
                         </div>
                         <div class="col pl-5 pr-5">
                           <h5> Delivery Details </h5>
@@ -136,7 +137,7 @@
 
 @section('js')
 <script type="text/javascript">
-	<!-- // Admin Order screen table detail toggle -->
+  <!-- // Admin Order screen table detail toggle -->
 $('.accordion-toggle').click(function(){
   $('.hiddenRow').hide();
   $(this).next('tr').find('.hiddenRow').show();

@@ -18,7 +18,7 @@ class DashboardController extends Controller
     //
 	public function fetch()
 	{
-		$orders = Orders::where('business_id',Auth::guard('admin')->user()->id)->get();
+		$orders = Orders::where('business_id',Auth::guard('admin')->user()->id)->where('completed','!=','1')->get();
 		$user = User::all();
 		$useraddress = UserAddress::all();
 		$item = Kitchen::where('business_id',Auth::guard('admin')->user()->id)->get();
@@ -55,6 +55,19 @@ class DashboardController extends Controller
 	public function settings()
 	{
 		return view('admin.settings');
+	}
+
+	public function past_orders()
+	{	
+		$orders = Orders::where('business_id',Auth::guard('admin')->user()->id)->where('completed','1')->get();
+		$user = User::all();
+		$useraddress = UserAddress::all();
+		$item = Kitchen::where('business_id',Auth::guard('admin')->user()->id)->get();
+		$itemnames = CategoryItem::where('business_id',Auth::guard('admin')->user()->id)->get();
+		$count = 1;
+		$timeslot = TimeSlots::where('business_id',Auth::guard('admin')->user()->id)->get();
+
+		return view('admin.past_orders',['orders' => $orders,'user' => $user,'useraddress' => $useraddress,'item' => $item,'itemnames' => $itemnames,'count' => $count,'timeslot' => $timeslot]);
 	}
 
 }
