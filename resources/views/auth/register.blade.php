@@ -49,14 +49,29 @@
                 <div class="row">
                   @csrf
                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="First name">
-                  
+                  @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email">
-
+                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password">
-
+                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                     <input type="password" name="password_confirmation" class="form-control" placeholder="Password">
 
                     <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="Mobile Number">
+                    @error('phone')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
                     <input type="submit" name="" value="Sign Up" class="btn btn-primary col ">
 
                 </div>
