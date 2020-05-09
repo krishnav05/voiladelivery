@@ -23,11 +23,10 @@ class DashboardController extends Controller
 		$useraddress = UserAddress::all();
 		$item = Kitchen::where('business_id',Auth::guard('admin')->user()->id)->get();
 		$itemnames = CategoryItem::where('business_id',Auth::guard('admin')->user()->id)->get();
-		$count = 1;
 		$timeslot = TimeSlots::where('business_id',Auth::guard('admin')->user()->id)->get();
 
 
-		return view('admin.dashboard',['orders' => $orders,'user' => $user,'useraddress' => $useraddress,'item' => $item,'itemnames' => $itemnames,'count' => $count,'timeslot' => $timeslot]);
+		return view('admin.dashboard',['orders' => $orders,'user' => $user,'useraddress' => $useraddress,'item' => $item,'itemnames' => $itemnames,'timeslot' => $timeslot]);
 	}
 
 	public function update($id,$status)
@@ -64,10 +63,14 @@ class DashboardController extends Controller
 		$useraddress = UserAddress::all();
 		$item = Kitchen::where('business_id',Auth::guard('admin')->user()->id)->get();
 		$itemnames = CategoryItem::where('business_id',Auth::guard('admin')->user()->id)->get();
-		$count = 1;
 		$timeslot = TimeSlots::where('business_id',Auth::guard('admin')->user()->id)->get();
 
-		return view('admin.past_orders',['orders' => $orders,'user' => $user,'useraddress' => $useraddress,'item' => $item,'itemnames' => $itemnames,'count' => $count,'timeslot' => $timeslot]);
+		return view('admin.past_orders',['orders' => $orders,'user' => $user,'useraddress' => $useraddress,'item' => $item,'itemnames' => $itemnames,'timeslot' => $timeslot]);
+	}
+
+	public function maindashboard()
+	{
+		return view('admin.maindashboard');
 	}
 
 }

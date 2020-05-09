@@ -9,6 +9,7 @@
         <h1> Table Row Toggel </h1>
       </div> -->
       <div class="col-lg-12">
+        <h1>New Items</h1>
         <table class="table table-bordered" style="border-collapse:collapse;">
             <thead>
                 <tr>
@@ -28,11 +29,11 @@
             	@foreach($useraddress as $uaddress)
             	@if($uaddress['id'] == $order['address_id'])
               <tr colspan="7" data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
-                    <td>{{$count++}} <span class="Blink">&bull;</span> </td>
+                    <td>{{$loop->iteration}} <span class="Blink">&bull;</span> </td>
                     <td>{{$order['id']}}</td>
                     <td>{{$userid['name']}}</td>
                     <td>{{$userid['phone']}}</td>
-                    <td> View Items +</td>
+                    <td><span class="btn btn-outline-primary btn-sm">View Items +</span></td>
                     <td>Online Success</td>
                     <td class="order-status-admin"> 
                     	@if($order['order_status'] == 'Pending')
@@ -86,7 +87,7 @@
                           <!-- <p>Note for chef will display here...</p> -->
                           
     <tr>
-      <th scope="row">1</th>
+      <th scope="row">{{$loop->iteration}}</th>
       <td>{{$inames['item_name']}}</td>
       <td>{{$kitchenitems['item_quantity']}}</td>
       <td>₹ {{$kitchenitems['item_quantity']*$inames['item_price']}}</td>
@@ -107,7 +108,35 @@
                         </div>
                         <div class="col pl-5 pr-5">
                           <h5> Delivery Details </h5>
-                          <p>Delivery Date  <strong style="float: right;">{{$order['date']}}</strong></p>
+                          <table class="table">
+                            <tbody>
+                              <tr>
+                                <td>Delivery Date</td>
+                                <td><strong>{{$order['date']}}</strong></td>
+                              </tr>
+                              <tr>
+                                <td>Delivery Time</td>
+                                <td>@foreach($timeslot as $time) @if($time['id'] == $order['time_slot'])<strong> {{$time['details']}}</strong> @endif @endforeach</td>
+                              </tr>
+                              <tr>
+                                <td>Name</td>
+                                <td><strong>{{$userid['name']}}</strong> </td>
+                              </tr>
+                              <tr>
+                                <td>Address</td>
+                                <td><strong>{{$uaddress['name']}} , 
+        {{$uaddress['flat_number']}} ,
+        {{$uaddress['society']}} ,
+        {{$uaddress['pincode']}} ,
+        {{$uaddress['landmark']}}</strong></td>
+                              </tr>
+                              <tr>
+                                <td>Mobile </td>
+                                <td> <strong>{{$userid['phone']}}</strong></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <!-- <p>Delivery Date  <strong style="float: right;">{{$order['date']}}</strong></p>
                           <p>Delivery Time  @foreach($timeslot as $time) @if($time['id'] == $order['time_slot'])<strong style="float: right;"> {{$time['details']}}</strong> @endif @endforeach</p>
                           <p>Name  <strong style="float: right;">{{$userid['name']}}</strong> </p>
                           <p>Address<strong style="float: right;">{{$uaddress['name']}} , 
@@ -115,7 +144,7 @@
         {{$uaddress['society']}} ,
         {{$uaddress['pincode']}} ,
         {{$uaddress['landmark']}}</strong> </p>
-                          <p>Mobile  <strong style="float: right;">{{$userid['phone']}}</strong></p>
+                          <p>Mobile  <strong style="float: right;">{{$userid['phone']}}</strong></p> -->
 
                         </div>
                     </div> 

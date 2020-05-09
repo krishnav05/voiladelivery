@@ -208,11 +208,11 @@ return [
     */
 
     'menu' => [
-        [
-            'text' => 'search',
-            'search' => true,
-            'topnav' => true,
-        ],
+        // [
+        //     'text' => 'search',
+        //     'search' => true,
+        //     'topnav' => true,
+        // ],
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
@@ -220,8 +220,15 @@ return [
         ],
         [
             'text'        => 'Dashboard',
-            'url'         => 'admin/dashboard',
+            'url'         => 'admin/maindashboard',
             'icon'        => 'fas fa-tasks',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'New Orders',
+            'url'         => 'admin/dashboard',
+            'icon'        => 'fas fa-cart-plus',
             // 'label'       => 4,
             'label_color' => 'success',
         ],
@@ -236,6 +243,13 @@ return [
             'text'        => 'Menu Upload',
             'url'         => 'admin/upload',
             'icon'        => 'far fa-fw fa-file',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Analytics',
+            'url'         => 'admin/analytics',
+            'icon'        => 'fas fa-chart-pie',
             // 'label'       => 4,
             'label_color' => 'success',
         ],

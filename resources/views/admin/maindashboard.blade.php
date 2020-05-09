@@ -1,0 +1,17 @@
+
+@extends('adminlte::page')
+
+@section('content')
+
+
+
+@endsection
+
+@section('js')
+
+
+@stop
+
+@section('css')
+
+@stop

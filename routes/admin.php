@@ -48,6 +48,8 @@
 
     Route::get('dashboard','\App\Http\Controllers\Admin\DashboardController@fetch')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
+    Route::get('maindashboard','\App\Http\Controllers\Admin\DashboardController@maindashboard')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
     Route::get('update/{id}/{status}','\App\Http\Controllers\Admin\DashboardController@update')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
     Route::get('upload','\App\Http\Controllers\Admin\UploadController@index')->middleware('auth:admin')->middleware('role:super;restaturaa');
@@ -63,3 +65,5 @@
     Route::get('settings','\App\Http\Controllers\Admin\DashboardController@settings')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
     Route::get('past_orders','\App\Http\Controllers\Admin\DashboardController@past_orders')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::get('analytics','\App\Http\Controllers\Admin\AnalyticsController@index')->middleware('auth:admin')->middleware('role:super;restaturaa');
