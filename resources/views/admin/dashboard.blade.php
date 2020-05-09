@@ -68,28 +68,54 @@
                       <div class="accordian-body collapse p-3 row" id="demo1">
                         <div class="col">
                           <h5> Order Details </h5>
-                        	@foreach($item as $kitchenitems)
-                        	@if($order['id'] == $kitchenitems['order_id'])
-                        	@foreach($itemnames as $inames)
-                        	@if($inames['item_id'] == $kitchenitems['item_id'])
-                          <p>{{$inames['item_name']}} - {{$kitchenitems['item_quantity']}} </p>
+                          <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+@foreach($item as $kitchenitems)
+                          @if($order['id'] == $kitchenitems['order_id'])
+                          @foreach($itemnames as $inames)
+                          @if($inames['item_id'] == $kitchenitems['item_id'])
+                          <!-- <p>{{$inames['item_name']}} - {{$kitchenitems['item_quantity']}} </p> -->
                           <!-- <p>Note for chef will display here...</p> -->
-                          @endif
+                          
+    <tr>
+      <th scope="row">1</th>
+      <td>{{$inames['item_name']}}</td>
+      <td>{{$kitchenitems['item_quantity']}}</td>
+      <td>₹ {{$kitchenitems['item_quantity']*$inames['item_price']}}</td>
+    </tr>
+    @endif
                           @endforeach
                           @endif
                           @endforeach
+                          <tr>
+      <th scope="row"></th>
+      <td>Total Price</td>
+      <td></td>
+      <td>₹ {{$order['amount']/100}}</td>
+    </tr>
+  </tbody>
+</table>
+                        	
                         </div>
                         <div class="col">
                           <h5> Delivery Details </h5>
-                          <p>Delivery Date: <strong>{{$order['date']}}</strong></p>
-                          <p>Delivery Time: @foreach($timeslot as $time) @if($time['id'] == $order['time_slot'])<strong> {{$time['details']}}</strong> @endif @endforeach</p>
-                          <p>Name : <strong>{{$userid['name']}}</strong> </p>
-                          <p>Address:<strong>{{$uaddress['name']}} , 
+                          <p>Delivery Date  <strong style="float: right;">{{$order['date']}}</strong></p>
+                          <p>Delivery Time  @foreach($timeslot as $time) @if($time['id'] == $order['time_slot'])<strong style="float: right;"> {{$time['details']}}</strong> @endif @endforeach</p>
+                          <p>Name  <strong style="float: right;">{{$userid['name']}}</strong> </p>
+                          <p>Address<strong style="float: right;">{{$uaddress['name']}} , 
         {{$uaddress['flat_number']}} ,
         {{$uaddress['society']}} ,
         {{$uaddress['pincode']}} ,
         {{$uaddress['landmark']}}</strong> </p>
-                          <p>Mobile : <strong>{{$userid['phone']}}</strong></p>
+                          <p>Mobile  <strong style="float: right;">{{$userid['phone']}}</strong></p>
 
                         </div>
                     </div> 
