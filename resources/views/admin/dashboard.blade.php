@@ -67,18 +67,7 @@
                     <td colspan="7" class="hiddenRow">
                       <div class="accordian-body collapse p-3 row" id="demo1">
                         <div class="col">
-                          <h2> Customer Information </h2>
-                          <p>Name : {{$userid['name']}} </p>
-                          <p>Address: {{$uaddress['name']}} , 
-        {{$uaddress['flat_number']}} ,
-        {{$uaddress['society']}} ,
-        {{$uaddress['pincode']}} ,
-        {{$uaddress['landmark']}}</p>
-                          <p>Mobile : {{$userid['phone']}}</p>
-
-                        </div>
-                        <div class="col">
-                          <h2> Order Details </h2>
+                          <h5> Order Details </h5>
                         	@foreach($item as $kitchenitems)
                         	@if($order['id'] == $kitchenitems['order_id'])
                         	@foreach($itemnames as $inames)
@@ -89,6 +78,19 @@
                           @endforeach
                           @endif
                           @endforeach
+                        </div>
+                        <div class="col">
+                          <h5> Delivery Details </h5>
+                          <p>Delivery Date: {{$order['date']}}</p>
+                          <p>Delivery Time: @foreach($timeslot as $time) @if($time['id'] == $order['time_slot']) {{$time['details']}} @endif @endforeach</p>
+                          <p>Name : {{$userid['name']}} </p>
+                          <p>Address: {{$uaddress['name']}} , 
+        {{$uaddress['flat_number']}} ,
+        {{$uaddress['society']}} ,
+        {{$uaddress['pincode']}} ,
+        {{$uaddress['landmark']}}</p>
+                          <p>Mobile : {{$userid['phone']}}</p>
+
                         </div>
                     </div> 
                   </td> 

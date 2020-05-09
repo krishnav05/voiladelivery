@@ -11,6 +11,7 @@ use App\Orders;
 use Auth;
 use Bitfumes\Multiauth\Model\Admin;
 use App\CategoryItem;
+use App\TimeSlots;
 
 class DashboardController extends Controller
 {
@@ -23,9 +24,10 @@ class DashboardController extends Controller
 		$item = Kitchen::where('business_id',Auth::guard('admin')->user()->id)->get();
 		$itemnames = CategoryItem::where('business_id',Auth::guard('admin')->user()->id)->get();
 		$count = 1;
+		$timeslot = TimeSlots::where('business_id',Auth::guard('admin')->user()->id)->get();
 
 
-		return view('admin.dashboard',['orders' => $orders,'user' => $user,'useraddress' => $useraddress,'item' => $item,'itemnames' => $itemnames,'count' => $count]);
+		return view('admin.dashboard',['orders' => $orders,'user' => $user,'useraddress' => $useraddress,'item' => $item,'itemnames' => $itemnames,'count' => $count,'timeslot' => $timeslot]);
 	}
 
 	public function update($id,$status)
