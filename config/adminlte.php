@@ -226,7 +226,7 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Upload',
+            'text'        => 'Menu Upload',
             'url'         => 'admin/upload',
             'icon'        => 'far fa-fw fa-file',
             // 'label'       => 4,
