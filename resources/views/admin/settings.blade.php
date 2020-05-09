@@ -68,15 +68,15 @@
           <form class="needs-validation" novalidate>
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="firstName">First name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                <label for="firstName">First name</label><i class="fas fa-pen" style="float: right;"></i>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="" required disabled>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="lastName">Last name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                <label for="lastName">Last name</label><i class="fas fa-pen" style="float: right;"></i>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required disabled>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
@@ -84,47 +84,47 @@
             </div>
 
             <div class="mb-3">
-              <label for="username">Username</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
+              <label for="username">Username</label><i class="fas fa-pen" style="float: right;"></i>
+              <!-- <div class="input-group"> -->
+                <!-- <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
-                </div>
-                <input type="text" class="form-control" id="username" placeholder="Username" required>
+                </div> -->
+                <input type="text" class="form-control" id="username" placeholder="Username" required disabled>
                 <div class="invalid-feedback" style="width: 100%;">
                   Your username is required.
                 </div>
-              </div>
+              <!-- </div> -->
             </div>
 
             <div class="mb-3">
-              <label for="email">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <label for="email">Email <span class="text-muted">(Optional)</span></label><i class="fas fa-pen" style="float: right;"></i>
+              <input type="email" class="form-control" id="email" placeholder="you@example.com" disabled>
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="address">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+              <label for="address">Address</label><i class="fas fa-pen" style="float: right;"></i>
+              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required disabled>
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+              <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label><i class="fas fa-pen" style="float: right;"></i>
+              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" disabled>
             </div>
 
             <div class="mb-3">
-              <label for="gstnumber">GST Number</label>
-              <input type="text" class="form-control" id="gstnumber" placeholder="GST Number">
+              <label for="gstnumber">GST Number</label><i class="fas fa-pen" style="float: right;"></i>
+              <input type="text" class="form-control" id="gstnumber" placeholder="GST Number" disabled>
             </div>
 
             <div class="mb-3">
-              <label for="pannumber">PAN Number</label>
-              <input type="text" class="form-control" id="pannumber" placeholder="PAN Number">
+              <label for="pannumber">PAN Number</label><i class="fas fa-pen" style="float: right;"></i>
+              <input type="text" class="form-control" id="pannumber" placeholder="PAN Number" disabled>
             </div>
 
             <div class="row">
@@ -176,8 +176,8 @@
                 </div>
               </div>
               <div class="col-md-3 mb-3">
-                <label for="zip">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required>
+                <label for="zip">Zip</label><i class="fas fa-pen" style="float: right;"></i>
+                <input type="text" class="form-control" id="zip" placeholder="" required disabled>
                 <div class="invalid-feedback">
                   Zip code required.
                 </div>
@@ -212,16 +212,16 @@
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="cc-name">Name on card</label>
-                <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                <label for="cc-name">Name on card</label><i class="fas fa-pen" style="float: right;"></i>
+                <input type="text" class="form-control" id="cc-name" placeholder="" required disabled>
                 <small class="text-muted">Full name as displayed on card</small>
                 <div class="invalid-feedback">
                   Name on card is required
                 </div>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="cc-number">Credit card number</label>
-                <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                <label for="cc-number">Credit card number</label><i class="fas fa-pen" style="float: right;"></i>
+                <input type="text" class="form-control" id="cc-number" placeholder="" required disabled>
                 <div class="invalid-feedback">
                   Credit card number is required
                 </div>
@@ -229,15 +229,15 @@
             </div>
             <div class="row">
               <div class="col-md-3 mb-3">
-                <label for="cc-expiration">Expiration</label>
-                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                <label for="cc-expiration">Expiration</label><i class="fas fa-pen" style="float: right;"></i>
+                <input type="text" class="form-control" id="cc-expiration" placeholder="" required disabled>
                 <div class="invalid-feedback">
                   Expiration date required
                 </div>
               </div>
               <div class="col-md-3 mb-3">
-                <label for="cc-expiration">CVV</label>
-                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                <label for="cc-expiration">CVV</label><i class="fas fa-pen" style="float: right;"></i>
+                <input type="text" class="form-control" id="cc-cvv" placeholder="" required disabled>
                 <div class="invalid-feedback">
                   Security code required
                 </div>
@@ -266,7 +266,18 @@
 
 @section('js')
 
-
+<script type="text/javascript">
+  $(document).on('click', ".fa-pen", function() {
+    $(this).removeClass('fa-pen');
+    $(this).addClass('fa-check');
+    $(this).next('input').removeAttr('disabled');
+});
+  $(document).on('click', ".fa-check", function() {
+    $(this).removeClass('fa-check');
+    $(this).addClass('fa-pen');
+    $(this).next('input').attr('disabled','disabled');
+});
+</script>
 
 @stop
 
