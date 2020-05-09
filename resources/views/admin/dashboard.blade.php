@@ -81,8 +81,8 @@
                         </div>
                         <div class="col">
                           <h5> Delivery Details </h5>
-                          <p>Delivery Date: {{$order['date']}}</p>
-                          <p>Delivery Time: @foreach($timeslot as $time) @if($time['id'] == $order['time_slot']) {{$time['details']}} @endif @endforeach</p>
+                          <p>Delivery Date: <strong>{{$order['date']}}</strong></p>
+                          <p>Delivery Time: @foreach($timeslot as $time) @if($time['id'] == $order['time_slot'])<strong> {{$time['details']}}</strong> @endif @endforeach</p>
                           <p>Name : {{$userid['name']}} </p>
                           <p>Address: {{$uaddress['name']}} , 
         {{$uaddress['flat_number']}} ,
