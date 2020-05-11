@@ -17,7 +17,7 @@
        <div class="col-sm-12 delivery-time">
         <p class="pt-1"> Your order number {{$cookie}} will be delivered to you in <span>45 minutes</span>. In case of contact Call Us at <a href="tel:+919667555094">+919667555094</a></p>
       </div>
-      <div class="col-sm-12 order-status active" id="recieved">
+      <div class="col-sm-12 order-status" id="recieved">
         <p> Order Received   <i class="fas fa-check-circle float-right fa-2x"></i> </p>
       </div>
       <div class="col-sm-12 order-status" id="preparing">
@@ -54,6 +54,11 @@
                     /* remind that 'data' is the response of the AjaxController */
                     success: function (data) { 
                       // console.log(data);
+                        if(data.status == 'accept')
+                        {
+                          $('#recieved').addClass('active');
+                        }
+
                         if(data.status == 'preparing')
                         {
                           $('#recieved').removeClass('active');

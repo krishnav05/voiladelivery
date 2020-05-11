@@ -342,7 +342,13 @@ class KitchenController extends Controller
         $business_id = Admin::where(Str::lower('url'),Str::lower($slug))->value('id');
 
 
-        if(Orders::where('id',$_COOKIE['orderid'])->value('order_status') == 'Preparing')
+        if(Orders::where('id',$_COOKIE['orderid'])->value('order_status') == 'Accepted')
+        {
+            $response = array(
+                    'status' => 'accept',
+                );
+        }
+        else if(Orders::where('id',$_COOKIE['orderid'])->value('order_status') == 'Preparing')
         {
             $response = array(
                     'status' => 'preparing',

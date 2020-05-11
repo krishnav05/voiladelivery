@@ -43,7 +43,7 @@
       <div class="col-sm-12 text-center mt-3">
            <h1>Enter Your Mobile Number</h1>
            <p>
-             <img src="assets/img/ic-enter-mobile.png">
+             <img src="{{asset('assets/img/ic-enter-mobile.png')}}">
            </p>
       </div>
     </div>

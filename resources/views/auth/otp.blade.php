@@ -55,7 +55,7 @@
                   </div>
                     
 
-                    <input type="submit" name="" value="Verify My Email" class="btn btn-primary col mt-3">
+                    <input type="submit" name="" value="VERIFY & PROCEED" class="btn btn-primary col mt-3">
                      
                     <div id="opt-timer" class="col-sm-12 text-center mt-3"></div>
                     <a href="#" id="resend" class="col-sm-12 small mt-3 pl-0 text-center">Resend OTP</a>

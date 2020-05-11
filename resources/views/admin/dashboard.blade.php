@@ -120,7 +120,7 @@
                               </tr>
                               <tr>
                                 <td>Name</td>
-                                <td><strong>{{$userid['name']}}</strong> </td>
+                                <td><strong>{{$uaddress['name']}}</strong> </td>
                               </tr>
                               <tr>
                                 <td>Address</td>
