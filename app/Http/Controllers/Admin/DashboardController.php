@@ -18,7 +18,7 @@ class DashboardController extends Controller
     //
 	public function fetch()
 	{
-		$orders = Orders::where('business_id',Auth::guard('admin')->user()->id)->where('completed','!=','1')->get();
+		$orders = Orders::where('business_id',Auth::guard('admin')->user()->id)->where('completed',null)->get();
 		$user = User::all();
 		$useraddress = UserAddress::all();
 		$item = Kitchen::where('business_id',Auth::guard('admin')->user()->id)->get();
