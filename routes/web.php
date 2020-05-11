@@ -80,9 +80,23 @@ Route::post('confirm_items','KitchenController@confirm');
 
 Route::post('check_status','KitchenController@check_status');
 
+
+Route::get('verifyotp',function(){
+	return view('auth.otp');
+});
+
+Route::get('otplogin',function(){
+	return view('auth.otplogin');
+});
+
+Route::post('sendotptomobile','OtpController@sendotp');
+
+Route::post('verify-otp','OtpController@verifyotp');
+
+
 }) ; 
 
 
-Auth::routes(['verify'=>true]);
+// Auth::routes(['verify'=>true]);
 
-Route::get('home', 'HomeController@index')->name('home')->middleware('verified');
+// Route::get('home', 'HomeController@index')->name('home')->middleware('verified');

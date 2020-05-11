@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="144.297" height="155.148" viewBox="0 0 144.297 155.148">
+  <g id="Group_1594" data-name="Group 1594" transform="translate(-9085.852 14319)">
+    <rect id="Rectangle_409" data-name="Rectangle 409" width="100" height="100" transform="translate(9109 -14319)" fill="none"/>
+    <g id="Group_1593" data-name="Group 1593" transform="translate(8967 -14450)">
+      <g id="phone_iphone-24px" transform="translate(158 149.812)" style="isolation: isolate">
+        <path id="Path_4091" data-name="Path 4091" d="M0,0H66.252V66.252H0Z" fill="none"/>
+        <path id="Path_4092" data-name="Path 4092" d="M33.985,1H11.9A6.9,6.9,0,0,0,5,7.9V54.829a6.9,6.9,0,0,0,6.9,6.9H33.985a6.9,6.9,0,0,0,6.9-6.9V7.9A6.9,6.9,0,0,0,33.985,1ZM22.943,58.97a4.141,4.141,0,1,1,4.141-4.141A4.135,4.135,0,0,1,22.943,58.97ZM35.365,47.928H10.521V9.281H35.365Z" transform="translate(8.802 1.76)" fill="#a8a596"/>
+      </g>
+      <g id="textsms-24px" transform="translate(201.564 131)" style="isolation: isolate">
+        <path id="Path_4093" data-name="Path 4093" d="M0,0H22.677V22.677H0Z" fill="none"/>
+        <path id="Path_4094" data-name="Path 4094" d="M19.008,2H3.89A1.9,1.9,0,0,0,2,3.89V20.9l3.78-3.78H19.008a1.9,1.9,0,0,0,1.89-1.89V3.89A1.9,1.9,0,0,0,19.008,2Zm0,13.228H5.78l-1.89,1.89V3.89H19.008ZM6.724,8.614h1.89V10.5H6.724Zm3.78,0h1.89V10.5H10.5Zm3.78,0h1.89V10.5h-1.89Z" transform="translate(-0.11 -0.11)" fill="#4e8e09"/>
+      </g>
+      <ellipse id="Ellipse_231" data-name="Ellipse 231" cx="17" cy="1" rx="17" ry="1" transform="translate(174 229)"/>
+    </g>
+  </g>
+</svg>

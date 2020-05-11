@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -36,7 +37,10 @@ class RegisterController extends Controller
     //     $title = $_COOKIE['slug'];
     //     $title = '/outlet/'.$title.'/kitchen';
 
-    //     return $title;
+    //     $number = Auth::user()->phone;
+
+    //     return redirect('/verifyotp')->with('number',$number);
+    //     // return $title;
     // }
     
     /**
@@ -61,6 +65,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string', 'phone', 'min:10', 'unique:users'], 
         ]);
     }
 

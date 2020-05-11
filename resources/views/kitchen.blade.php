@@ -131,7 +131,7 @@
   </div>  
   @guest
   <div class="row fixed-bottom mt-5">
-   <input onclick="window.location = '/login';" type="submit" name="" value="CONTINUE TO PLACE ORDER" class="btn btn-primary col rounded-0">
+   <input onclick="window.location = 'otplogin';" type="submit" name="" value="CONTINUE TO PLACE ORDER" class="btn btn-primary col rounded-0">
  </div>
  @else
  <div class="row fixed-bottom mt-5" id="payclass">

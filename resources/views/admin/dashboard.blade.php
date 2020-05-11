@@ -9,7 +9,7 @@
         <h1> Table Row Toggel </h1>
       </div> -->
       <div class="col-lg-12">
-        <h1>New Items</h1>
+        <h1>New Orders</h1>
         <table class="table table-bordered" style="border-collapse:collapse;">
             <thead>
                 <tr>
@@ -30,7 +30,7 @@
             	@if($uaddress['id'] == $order['address_id'])
               <tr colspan="7" data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
                     <td>{{$loop->iteration}} <span class="Blink">&bull;</span> </td>
-                    <td>{{$order['id']}}</td>
+                    <td><strong>#{{$order['id']}}</strong></td>
                     <td>{{$userid['name']}}</td>
                     <td>{{$userid['phone']}}</td>
                     <td><span class="btn btn-outline-primary btn-sm">View Items +</span></td>
