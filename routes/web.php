@@ -80,6 +80,7 @@ Route::post('confirm_items','KitchenController@confirm');
 
 Route::post('check_status','KitchenController@check_status');
 
+Route::post('checkminorder','KitchenController@checkminimumprice');
 
 Route::get('verifyotp',function(){
 	return view('auth.otp');

@@ -51,14 +51,14 @@
                 <div class="row">
                   <div class="col-sm-12 text-center">
                     <input type="hidden" id="phone" name="phone" value="{{$number}}">
-                    <input type="text" name="pin1" class="otp-in"> <input type="text" name="pin2" class="otp-in"> <input type="text" name="pin3" class="otp-in"> <input type="text" name="pin4" class="otp-in">
+                    <input type="text" name="pin1" class="otp-in" maxlength="1"> <input type="text" name="pin2" class="otp-in" maxlength="1"> <input type="text" name="pin3" class="otp-in" maxlength="1"> <input type="text" name="pin4" class="otp-in" maxlength="1">
                   </div>
                     
 
                     <input type="submit" name="" value="Verify My Email" class="btn btn-primary col mt-3">
                      
                     <div id="opt-timer" class="col-sm-12 text-center mt-3"></div>
-                    <a id="resend" class="col-sm-12 small mt-3 pl-0 text-center">Resend OTP</a>
+                    <a href="#" id="resend" class="col-sm-12 small mt-3 pl-0 text-center">Resend OTP</a>
                 </div>
         </form>
      </div>
@@ -71,7 +71,10 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{asset('assets/js/custom-menu.js')}}"></script>
@@ -89,23 +92,47 @@
               timeLeft--;
           }
       }
-      $('#resend').on('click',function(){
-        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        // var phone = $('#phone').val();
-    $.ajax({
-                    /* the route pointing to the post function */
-                    url: "kitchen_update",
-                    type: 'POST',
-                    /* send the csrf-token and the input to the controller */
-                    data: {_token: CSRF_TOKEN, phone: 9999999999},
-                    dataType: 'JSON',
-                    /* remind that 'data' is the response of the AjaxController */
-                    success: function (data) { 
-                       
-                    }
-                });
+
+      $(document).ready(function(){
+        $('input').keyup(function(event){
+          if($(this).val().length==$(this).attr("maxlength") && event.keyCode !== 8){
+            $(this).next().focus();
+          }
+        });
+      $('input').keydown(function(event){
+        if(event.keyCode == 8){
+          event.preventDefault();
+          if($(this).val().length==1){
+            $(this).val('');
+          }
+          else{
+            $(this).prev().focus().val('');
+          }
+        }
+      });
       });
 
+      $('#resend').on('click',function(){
+        var phone = $('#phone').val();
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+          /* the route pointing to the post function */
+          url: 'sendotptomobile',
+          type: 'POST',
+          /* send the csrf-token and the input to the controller */
+          data: {_token: CSRF_TOKEN,phone:phone, action:'resend'},
+          dataType: 'JSON',
+          /* remind that 'data' is the response of the AjaxController */
+          success: function (data) {
+            window.timeLeft = 60;
+            window.elem = document.getElementById('opt-timer');
+            clearTimeout(window.timerId);
+            window.timerId = setInterval(countdown, 1000);
+          }
+        });
+
+
+      });
 
     </script>
   </body>

@@ -373,4 +373,30 @@ class KitchenController extends Controller
         return view('order_sent_kitchen',['cookie'=>$cookie]);
     }
 
+
+    public function checkminimumprice($slug,Request $request)
+    {
+        $ifexist = Admin::where(Str::lower('url'),Str::lower($slug))->first();
+
+        if($ifexist == null)
+        {
+            return abort(404);
+        }
+        //show tables belonging to the restraunt
+        $minimum_price = Admin::where(Str::lower('url'),Str::lower($slug))->value('minimum_price');
+
+        if(($request->price/100) >= $minimum_price)
+        {
+            $response = array(
+                    'status' => 'okay',
+                );
+        }
+        else{
+            $response = array(
+                    'status' => 'more',
+                );
+        }
+        
+        return response()->json($response); 
+    }
 }

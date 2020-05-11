@@ -13,12 +13,29 @@ class OtpController extends Controller
 	public function sendotp(Request $request)
     {   
         $user = User::where('phone',$request->phone)->first();
+
+        
+        if($request->action == 'resend')
+        {
+
+            $otp = rand(1000,9999);
+            User::where('phone',$request->phone)->update(['otp'=>$otp]);
+   //          $sms = new Textlocal();
+            // $sms->send($otp,'91'.$request->phone); //sender is optional
+            
+            $response = array(
+            'status' => 'success',
+          );
+        return response()->json($response); 
+        }
+
+        
         if($user)
         {	
         	$otp = rand(1000,9999);
             User::where('phone',$request->phone)->update(['otp'=>$otp]);
-            $sms = new Textlocal();
-			$sms->send($otp,'91'.$request->phone); //sender is optional
+   //          $sms = new Textlocal();
+			// $sms->send($otp,'91'.$request->phone); //sender is optional
 
         return view('auth.otp',['number'=>$request->phone]);
         }
@@ -32,8 +49,8 @@ class OtpController extends Controller
 
         	$otp = rand(1000,9999);
 
-        	$sms = new Textlocal();
-			$sms->send($otp,'91'.$request->phone,'Voila Delivery');
+   //      	$sms = new Textlocal();
+			// $sms->send($otp,'91'.$request->phone,'Voila Delivery');
 
         	User::where('phone',$request->phone)->update(['otp'=>$otp]);
             // return redirect()->back();
@@ -45,6 +62,7 @@ class OtpController extends Controller
     {   
         $pin = $request->pin1.$request->pin2.$request->pin3.$request->pin4;
         $user = User::where('phone',$request->phone)->where('otp',$pin)->first();
+
         if($user)
         {
             Auth::login($user);
@@ -62,6 +80,8 @@ class OtpController extends Controller
             return redirect()->route('kitchen',['slug'=>$slug]);
             // return view('home');
         }
+        else
+            return redirect()->back();
     }
 
 }
