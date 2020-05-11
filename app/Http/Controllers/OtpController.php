@@ -20,8 +20,8 @@ class OtpController extends Controller
 
             $otp = rand(1000,9999);
             User::where('phone',$request->phone)->update(['otp'=>$otp]);
-   //          $sms = new Textlocal();
-            // $sms->send($otp,'91'.$request->phone); //sender is optional
+            $sms = new Textlocal();
+            $sms->send($otp,'91'.$request->phone); //sender is optional
             
             $response = array(
             'status' => 'success',
@@ -34,8 +34,8 @@ class OtpController extends Controller
         {	
         	$otp = rand(1000,9999);
             User::where('phone',$request->phone)->update(['otp'=>$otp]);
-   //          $sms = new Textlocal();
-			// $sms->send($otp,'91'.$request->phone); //sender is optional
+            $sms = new Textlocal();
+			$sms->send($otp,'91'.$request->phone); //sender is optional
 
         return view('auth.otp',['number'=>$request->phone]);
         }
@@ -49,8 +49,8 @@ class OtpController extends Controller
 
         	$otp = rand(1000,9999);
 
-   //      	$sms = new Textlocal();
-			// $sms->send($otp,'91'.$request->phone,'Voila Delivery');
+        	$sms = new Textlocal();
+			$sms->send($otp,'91'.$request->phone,'Voila Delivery');
 
         	User::where('phone',$request->phone)->update(['otp'=>$otp]);
             // return redirect()->back();
