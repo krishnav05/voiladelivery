@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a6a1405ea67e523d018906d082ee975",
+    "content-hash": "38bdd7d459d5ee4038ca58a1804d38b0",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -1972,6 +1972,55 @@
                 "shell"
             ],
             "time": "2020-04-07T06:44:48+00:00"
+        },
+        {
+            "name": "rahulreghunath/textlocal",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rahulreghunath/Textlocal.git",
+                "reference": "5ec529463616517a5d26d396f9192b214b3994c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rahulreghunath/Textlocal/zipball/5ec529463616517a5d26d396f9192b214b3994c4",
+                "reference": "5ec529463616517a5d26d396f9192b214b3994c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rahulreghunath\\Textlocal\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rahulreghunath\\Textlocal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rahul Reghunath",
+                    "email": "reghunath11@gmail.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "Textlocal sms gateway wrapper for Laravel",
+            "keywords": [
+                "laravel",
+                "sms gateway",
+                "textlocal"
+            ],
+            "time": "2019-02-07T10:50:11+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

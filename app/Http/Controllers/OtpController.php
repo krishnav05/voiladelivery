@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
+use Rahulreghunath\Textlocal\Textlocal;
 
 class OtpController extends Controller
 {
@@ -16,6 +17,9 @@ class OtpController extends Controller
         {	
         	$otp = rand(1000,9999);
             User::where('phone',$request->phone)->update(['otp'=>$otp]);
+            $sms = new Textlocal();
+			$sms->send($otp,'91'.$request->phone); //sender is optional
+
         return view('auth.otp',['number'=>$request->phone]);
         }
         else
@@ -27,6 +31,9 @@ class OtpController extends Controller
         	$user->save(); 
 
         	$otp = rand(1000,9999);
+
+        	$sms = new Textlocal();
+			$sms->send($otp,'91'.$request->phone,'Voila Delivery');
 
         	User::where('phone',$request->phone)->update(['otp'=>$otp]);
             // return redirect()->back();
