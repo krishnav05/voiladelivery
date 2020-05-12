@@ -50,7 +50,7 @@ class OtpController extends Controller
         	$otp = rand(1000,9999);
 
         	$sms = new Textlocal();
-			$sms->send($otp,'91'.$request->phone,'Voila Delivery');
+			$sms->send($otp,'91'.$request->phone);
 
         	User::where('phone',$request->phone)->update(['otp'=>$otp]);
             // return redirect()->back();
