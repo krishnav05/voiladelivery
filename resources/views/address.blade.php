@@ -150,12 +150,12 @@
   $('.select-date').on('click',function(){
     $('.select-date').removeClass('active');
     $(this).addClass('active');
-  })
+  });
 
   $('.select-time').on('click',function(){
     $('.select-time').removeClass('active');
     $(this).addClass('active');
-  })
+  });
 </script>
 
 <script type="text/javascript">

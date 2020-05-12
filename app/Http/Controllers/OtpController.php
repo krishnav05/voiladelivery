@@ -21,7 +21,7 @@ class OtpController extends Controller
             $otp = rand(1000,9999);
             User::where('phone',$request->phone)->update(['otp'=>$otp]);
             $sms = new Textlocal();
-            $sms->send($otp,'91'.$request->phone); //sender is optional
+            $sms->send($otp.' is the OPT verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM'); //sender is optional
             
             $response = array(
             'status' => 'success',
@@ -35,7 +35,7 @@ class OtpController extends Controller
         	$otp = rand(1000,9999);
             User::where('phone',$request->phone)->update(['otp'=>$otp]);
             $sms = new Textlocal();
-			$sms->send($otp,'91'.$request->phone); //sender is optional
+			$sms->send($otp.' is the OPT verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM'); //sender is optional
 
         return view('auth.otp',['number'=>$request->phone]);
         }
@@ -50,7 +50,7 @@ class OtpController extends Controller
         	$otp = rand(1000,9999);
 
         	$sms = new Textlocal();
-			$sms->send($otp,'91'.$request->phone);
+			$sms->send($otp.' is the OPT verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM');
 
         	User::where('phone',$request->phone)->update(['otp'=>$otp]);
             // return redirect()->back();
