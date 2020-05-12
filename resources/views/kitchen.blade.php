@@ -211,6 +211,8 @@
 </script>
 
 <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(event) { 
+  //do work
   $('.kitchen-minus').on('click',function(){
   var id = '#'+this.id;
   var price = '#price_' + this.id;
@@ -307,6 +309,8 @@ $('#paynow').on('click',function(){
 
         
 });
+});
+  
 
 </script>
 @endsection

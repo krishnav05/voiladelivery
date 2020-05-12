@@ -234,7 +234,9 @@
 @section('footer')
 
 <script type="text/javascript">
-  @foreach($category as $data)
+  document.addEventListener("DOMContentLoaded", function(event) { 
+  //do work
+@foreach($category as $data)
   document.querySelector('.{{str_replace(' ','',$data['category_name'])}}').addEventListener('click', function(e) {
     e.preventDefault();
     document.querySelector('#{{str_replace(' ','',$data['category_name'])}}').scrollIntoView({ behavior: 'smooth' });
@@ -364,6 +366,11 @@ $('#theme-color-dark').click(function () {
 $('#theme-color-light').click(function () {
     $('head').find('link#menu-dark').remove();
 });
+
+  
+});
+
+  
 </script>
 
 @endsection

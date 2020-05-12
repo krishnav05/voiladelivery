@@ -104,9 +104,11 @@
 @endsection
 
 @section('footer')
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
 
 <script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(event) { 
+  //do work
   //show or hide address form
   $('#show_address_field').on('click',function(){
     if(!$('.address-ad-frm').is(':visible')){
@@ -156,10 +158,14 @@
     $('.select-time').removeClass('active');
     $(this).addClass('active');
   });
+});
+  
 </script>
 
 <script type="text/javascript">
-   function demoSuccessHandler(transaction) {
+  document.addEventListener("DOMContentLoaded", function(event) { 
+  //do work
+  function demoSuccessHandler(transaction) {
         // You can write success code here. If you want to store some data in database.
         // $("#paymentDetail").removeAttr('style');
         // $('#paymentID').text(transaction.razorpay_payment_id);
@@ -228,6 +234,8 @@
 
      
     }
+});
+   
 </script>
 
 @endsection

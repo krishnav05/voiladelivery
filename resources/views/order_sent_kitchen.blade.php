@@ -41,6 +41,10 @@
 <script src="https://kit.fontawesome.com/2659e6167d.js" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function(event) { 
+  //do work
+
+   
  function load(){
  setTimeout(function(){
   var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -85,6 +89,8 @@
 }
 
 load();
+});
+
 </script>
 
 @endsection
