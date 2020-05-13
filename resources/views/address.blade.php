@@ -122,9 +122,21 @@
   //add address
   $('#add_address').on('click',function(){
 
-    const arr = $('#address_form').serializeArray(); // get the array
-    const data = arr.reduce((acc, {name, value}) => ({...acc, [name]: value}),{}); // form the object
-    console.log(data);
+    // const arr = $('#address_form').serializeArray(); // get the array
+    // const data = arr.reduce((acc, {name, value}) => ({...acc, [name]: value}),{}); // form the object
+    function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var arr = $('#address_form').serializeArray();
+var data = arr.reduce(function (acc, _ref) {
+  var name = _ref.name,
+      value = _ref.value;
+  return _objectSpread(_objectSpread({}, acc), {}, _defineProperty({}, name, value));
+}, {});
+    // console.log(data);
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
                     /* the route pointing to the post function */

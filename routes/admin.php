@@ -67,3 +67,5 @@
     Route::get('past_orders','\App\Http\Controllers\Admin\DashboardController@past_orders')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
     Route::get('analytics','\App\Http\Controllers\Admin\AnalyticsController@index')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::get('menu_upload','\App\Http\Controllers\Admin\MenuController@index')->middleware('auth:admin')->middleware('role:super;restaturaa');

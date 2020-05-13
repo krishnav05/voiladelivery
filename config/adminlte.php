@@ -247,6 +247,13 @@ return [
             'label_color' => 'success',
         ],
         [
+            'text'        => 'Items Upload',
+            'url'         => 'admin/menu_upload',
+            'icon'        => 'far fa-fw fa-file',
+            // 'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
             'text'        => 'Analytics',
             'url'         => 'admin/analytics',
             'icon'        => 'fas fa-chart-pie',
