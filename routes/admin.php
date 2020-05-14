@@ -69,3 +69,9 @@
     Route::get('analytics','\App\Http\Controllers\Admin\AnalyticsController@index')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
     Route::get('menu_upload','\App\Http\Controllers\Admin\MenuController@index')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::post('category','\App\Http\Controllers\Admin\MenuController@add')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::post('delete','\App\Http\Controllers\Admin\MenuController@delete')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::post('edit','\App\Http\Controllers\Admin\MenuController@edit')->middleware('auth:admin')->middleware('role:super;restaturaa');

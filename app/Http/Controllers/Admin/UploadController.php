@@ -10,6 +10,7 @@ use App\Category;
 use App\HindiCategory;
 use App\HindiCategoryItems;
 use Session;
+use Auth;
 
 class UploadController extends Controller
 {
