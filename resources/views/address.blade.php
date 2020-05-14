@@ -66,7 +66,7 @@
              <input type="text" class="form-control" name="name" placeholder="Name">
              <input type="text" class="form-control" name="flat" placeholder="Flat/House No.">
              <input type="text" class="form-control" name="society" placeholder="Society">
-             <input type="number" minlength="6" maxlength="6" class="form-control" name="pincode" placeholder="PIN Code">
+             <input pattern="\d*" type="text" size="6" minlength="6" maxlength="6" class="form-control" name="pincode" placeholder="PIN Code">
              <input type="text" class="form-control" name="landmark" placeholder="Landmark">
              <input type="button" name="" value="Add Address" class="btn btn-primary col " id="add_address">
           </form>
