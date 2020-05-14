@@ -66,7 +66,7 @@
              <input type="text" class="form-control" name="name" placeholder="Name">
              <input type="text" class="form-control" name="flat" placeholder="Flat/House No.">
              <input type="text" class="form-control" name="society" placeholder="Society">
-             <input type="text" class="form-control" name="pincode" placeholder="PIN Code">
+             <input type="number" minlength="6" maxlength="6" class="form-control" name="pincode" placeholder="PIN Code">
              <input type="text" class="form-control" name="landmark" placeholder="Landmark">
              <input type="button" name="" value="Add Address" class="btn btn-primary col " id="add_address">
           </form>
@@ -121,7 +121,28 @@
 
   //add address
   $('#add_address').on('click',function(){
+    if($('input[name="name"]').val().trim() == '')
+    {
+      $('input[name="name"]').attr("placeholder", "Please fill this field");
+    }
+    if($('input[name="flat"]').val().trim() == '')
+    {
+      $('input[name="flat"]').attr("placeholder", "Please fill this field");
+    }
+    if($('input[name="society"]').val().trim() == '')
+    {
+      $('input[name="society"]').attr("placeholder", "Please fill this field");
+    }
+    if($('input[name="pincode"]').val().trim() == '')
+    {
+      $('input[name="pincode"]').attr("placeholder", "Please fill this field");
+    }
+    if($('input[name="landmark"]').val().trim() == '')
+    {
+      $('input[name="landmark"]').attr("placeholder", "Please fill this field");
+    }
 
+    $('input[name="name"]').css("border-color", "lime");
     // const arr = $('#address_form').serializeArray(); // get the array
     // const data = arr.reduce((acc, {name, value}) => ({...acc, [name]: value}),{}); // form the object
     function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }

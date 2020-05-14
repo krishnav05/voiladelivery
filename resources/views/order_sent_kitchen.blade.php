@@ -15,7 +15,7 @@
   <div class="container">
     <div class="row">
        <div class="col-sm-12 delivery-time">
-        <p class="pt-1"> Your order number {{$cookie}} will be delivered to you in <span>45 minutes</span>. In case of contact Call Us at <a href="tel:+919667555094">+919667555094</a></p>
+        <p class="pt-1"> Your order number<strong> #{{$cookie}}</strong> will be delivered to you in <span>45 minutes</span>. In case of contact Call Us at <a href="tel:+919667555094">+919667555094</a></p>
       </div>
       <div class="col-sm-12 order-status" id="recieved">
         <p> Order Received   <i class="fas fa-check-circle float-right fa-2x"></i> </p>

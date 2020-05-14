@@ -53,7 +53,7 @@
                 <div class="row">
                   <div class="col-sm-12 pl-0 pr-0">
                     <h5 class="text-center mt-5">India +91 🇮🇳</h5>
-                    <input type="number" name="phone" size="10" class="col-sm-12 otp-in text-left mb-2" placeholder="Your Phone Number" style="width: 100%;"> 
+                    <input type="number" name="phone" size="10" minlength="10" maxlength="10" class="col-sm-12 otp-in text-left mb-2" placeholder="Your Phone Number" style="width: 100%;"> 
                     <p class="small text-center">We will send you a One time SMS message Carrier rates may apply</p>
                   </div>
                     

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use Rahulreghunath\Textlocal\Textlocal;
+use Session;
 
 class OtpController extends Controller
 {
@@ -80,8 +81,11 @@ class OtpController extends Controller
             return redirect()->route('kitchen',['slug'=>$slug]);
             // return view('home');
         }
-        else
-            return redirect()->back();
+        else{
+            Session::flash('message', "Wrong Pin");
+            return view('auth.otp',['number'=>$request->phone])->with(['message', 'Wrong Pin']);
+        }
+            
     }
 
 }

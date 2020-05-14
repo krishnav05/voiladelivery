@@ -66,6 +66,8 @@ class KitchenController extends Controller
             {   //get cookie
                 $val = $_COOKIE[$slug.'uni_id'];
 
+                Kitchen::where('user_id',Auth::user()->id)->where('confirm_status',null)->delete();
+
                 $session_value = SessionValue::where('session_id',$val)->get();
 
                 foreach ($session_value as $key) {

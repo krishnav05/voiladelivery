@@ -45,16 +45,22 @@
            <p> Please type the verification code sent to <br> +91 {{$number}}</p>
          </div>
     </div>
+   
      <div class="row mt-2">
        <form action="verify-otp" method="POST" class="col sign-in-up-form pl-5 pr-5 mt-3">
         @csrf
                 <div class="row">
                   <div class="col-sm-12 text-center">
                     <input type="hidden" id="phone" name="phone" value="{{$number}}">
-                    <input type="text" name="pin1" class="otp-in" maxlength="1"> <input type="text" name="pin2" class="otp-in" maxlength="1"> <input type="text" name="pin3" class="otp-in" maxlength="1"> <input type="text" name="pin4" class="otp-in" maxlength="1">
+                    <input type="number" minlength="1" maxlength="1" name="pin1" class="otp-in" maxlength="1"> <input type="number" minlength="1" maxlength="1" name="pin2" class="otp-in" maxlength="1"> <input type="number" minlength="1" maxlength="1" name="pin3" class="otp-in" maxlength="1"> <input type="number" minlength="1" maxlength="1" name="pin4" class="otp-in" maxlength="1">
                   </div>
-                    
+                   @if (Session::has('message'))
 
+   <div class="col-sm-12 text-center mt-3 alert alert-danger" role="alert">
+  Wrong Pin!
+</div>
+
+@endif
                     <input type="submit" name="" value="VERIFY & PROCEED" class="btn btn-primary col mt-3">
                      
                     <div id="opt-timer" class="col-sm-12 text-center mt-3"></div>
