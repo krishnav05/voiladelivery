@@ -62,7 +62,7 @@
 
     Route::post('uploadHindiCategoryItems', '\App\Http\Controllers\Admin\UploadController@uploadHindiCategoryItems')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
-    Route::get('settings','\App\Http\Controllers\Admin\DashboardController@settings')->middleware('auth:admin')->middleware('role:super;restaturaa');
+    Route::get('profile','\App\Http\Controllers\Admin\DashboardController@profile')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
     Route::get('past_orders','\App\Http\Controllers\Admin\DashboardController@past_orders')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
@@ -75,3 +75,7 @@
     Route::post('delete','\App\Http\Controllers\Admin\MenuController@delete')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
     Route::post('edit','\App\Http\Controllers\Admin\MenuController@edit')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::get('settings','\App\Http\Controllers\Admin\DashboardController@settings')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::post('update_tax','\App\Http\Controllers\Admin\DashboardController@update_settings')->middleware('auth:admin')->middleware('role:super;restaturaa');

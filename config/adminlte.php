@@ -260,10 +260,15 @@ return [
             // 'label'       => 4,
             'label_color' => 'success',
         ],
+        [
+            'text' => 'Settings',
+            'url'  => 'admin/settings',
+            'icon' => 'fas fa-cog',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

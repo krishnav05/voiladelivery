@@ -70,10 +70,11 @@ class AddressController extends Controller
                     }
                 }
             }
-
+            $tax = Admin::where('id',$business_id)->value('tax_applicable');
+            $total_price = $total_price + (($tax)/100)*$total_price;
             $total_price*= 100;
-
-
+             
+            
         $timeslots = TimeSlots::where('business_id',$business_id)->get();
 
     	return view('address',['all_address' => $all_address,'total_price'=>$total_price,'timeslots' => $timeslots]);

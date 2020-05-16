@@ -51,9 +51,9 @@ class DashboardController extends Controller
 		return redirect()->back();
 	}
 
-	public function settings()
+	public function profile()
 	{
-		return view('admin.settings');
+		return view('admin.profile');
 	}
 
 	public function past_orders()
@@ -71,6 +71,20 @@ class DashboardController extends Controller
 	public function maindashboard()
 	{
 		return view('admin.maindashboard');
+	}
+
+	public function settings()
+	{
+		$tax = Auth::guard('admin')->user()->tax_applicable;
+		return view('admin.settings',['tax'=>$tax]);
+	}
+
+	public function update_settings(Request $request)
+	{	
+		Auth::guard('admin')->user()->update(['tax_applicable' => $request->tax]);
+
+		$tax = Auth::guard('admin')->user()->tax_applicable;
+		return view('admin.settings',['tax'=>$tax]);
 	}
 
 }
