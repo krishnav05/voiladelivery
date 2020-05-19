@@ -60,6 +60,7 @@
                                 @admin('super')
                                 <a class="dropdown-item" href="{{ route('admin.show') }}">{{
                                     ucfirst(config('multiauth.prefix')) }}</a>
+                                    <a class="dropdown-item" href="{{ route('generatekey') }}">Generate License</a>
                                 @permitToParent('Role')
                                 <a class="dropdown-item" href="{{ route('admin.roles') }}">Roles</a>
                                 @endpermitToParent

@@ -13,6 +13,7 @@
         "bitfumes/laravel-multiauth": "^4.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
+        "gladcodes/keygen": "^1.1",
         "guzzlehttp/guzzle": "^6.3",
         "jeroennoten/laravel-adminlte": "^3.2",
         "laravel/framework": "^7.0",

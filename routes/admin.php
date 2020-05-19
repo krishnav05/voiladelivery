@@ -79,3 +79,11 @@
     Route::get('settings','\App\Http\Controllers\Admin\DashboardController@settings')->middleware('auth:admin')->middleware('role:super;restaturaa');
 
     Route::post('update_tax','\App\Http\Controllers\Admin\DashboardController@update_settings')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::get('license','\App\Http\Controllers\Admin\LicenseController@index')->middleware('auth:admin')->middleware('role:super;restaturaa')->name('license');
+
+    Route::post('update_license','\App\Http\Controllers\Admin\LicenseController@update_license')->middleware('auth:admin')->middleware('role:super;restaturaa');
+
+    Route::get('generatekey','\App\Http\Controllers\Admin\LicenseController@generatekey')->middleware('auth:admin')->middleware('role:super')->name('generatekey');
+
+    Route::post('license_generate','\App\Http\Controllers\Admin\LicenseController@license_generate')->middleware('auth:admin')->middleware('role:super;restaturaa');

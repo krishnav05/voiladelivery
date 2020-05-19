@@ -17,7 +17,13 @@ class DashboardController extends Controller
 {
     //
 	public function fetch()
-	{
+	{	
+		$check = Auth::guard('admin')->user()->license_id;
+    	if($check == null)
+    	{
+    		return redirect()->route('license');
+    	}
+
 		$orders = Orders::where('business_id',Auth::guard('admin')->user()->id)->where('completed',null)->get();
 		$user = User::all();
 		$useraddress = UserAddress::all();
@@ -53,11 +59,22 @@ class DashboardController extends Controller
 
 	public function profile()
 	{
+		$check = Auth::guard('admin')->user()->license_id;
+    	if($check == null)
+    	{
+    		return redirect()->route('license');
+    	}
 		return view('admin.profile');
 	}
 
 	public function past_orders()
 	{	
+		$check = Auth::guard('admin')->user()->license_id;
+    	if($check == null)
+    	{
+    		return redirect()->route('license');
+    	}
+
 		$orders = Orders::where('business_id',Auth::guard('admin')->user()->id)->where('completed','1')->get();
 		$user = User::all();
 		$useraddress = UserAddress::all();
@@ -69,12 +86,24 @@ class DashboardController extends Controller
 	}
 
 	public function maindashboard()
-	{
+	{	
+		$check = Auth::guard('admin')->user()->license_id;
+    	if($check == null)
+    	{
+    		return redirect()->route('license');
+    	}
+
 		return view('admin.maindashboard');
 	}
 
 	public function settings()
-	{
+	{	
+		$check = Auth::guard('admin')->user()->license_id;
+    	if($check == null)
+    	{
+    		return redirect()->route('license');
+    	}
+		
 		$tax = Auth::guard('admin')->user()->tax_applicable;
 		return view('admin.settings',['tax'=>$tax]);
 	}

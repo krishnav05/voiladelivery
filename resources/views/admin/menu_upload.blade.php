@@ -52,11 +52,11 @@
     @foreach($category as $cat)
     <tr>
       <th scope="row">{{$loop->iteration}}</th>
-      <td>{{$cat['category_id']}}</td>
-      <td>{{$cat['category_name']}}</td>
-      <td>@if($cat['is_pure_veg'] == 1)
+      <td class="id_category">{{$cat['category_id']}}</td>
+      <td class="name_category">{{$cat['category_name']}}</td>
+      <td class="veg_category">@if($cat['is_pure_veg'] == 1)
       Yes @else No @endif</td>
-      <td><!-- <button type="button" class="btn btn-primary"><i class="fas fa-pen"></i></button>  --><button id="{{$cat['id']}}" type="button" class="btn btn-danger category-delete"><i class="fas fa-times"></i></button></td>
+      <td><button type="button" class="btn btn-primary categorymodal" data-toggle="modal" data-target="#categoryEditModal"><i class="fas fa-pen"></i></button> <button id="{{$cat['id']}}" type="button" class="btn btn-danger category-delete"><i class="fas fa-times"></i></button></td>
     </tr>
     @endforeach
   </tbody>
@@ -84,7 +84,7 @@
       <td><input name="item_description" type="text" class="form-control" placeholder="Item Description"></td>
       <td><input name="item_price" type="text" class="form-control" placeholder="Item Price"></td>
       <td>
-        <select id="item-option" class="form-control" id="">
+        <select id="item-option" class="form-control">
         <option value="veg">Veg</option>
         <option value="nonveg">Non Veg</option>
       </select>
@@ -118,17 +118,17 @@
     @foreach($category_items as $cat_items)
     <tr>
       <th scope="row">{{$loop->iteration}}</th>
-      <td>{{$cat_items['item_id']}}</td>
-      <td>{{$cat_items['item_name']}}</td>
-      <td>{{$cat_items['item_description']}}</td>
-      <td>{{$cat_items['item_price']}}</td>
-      <td>{{$cat_items['item_vegetarian']}}</td>
+      <td class="id_item">{{$cat_items['item_id']}}</td>
+      <td class="name_item">{{$cat_items['item_name']}}</td>
+      <td class="description_item">{{$cat_items['item_description']}}</td>
+      <td class="price_item">{{$cat_items['item_price']}}</td>
+      <td class="veg_item">{{$cat_items['item_vegetarian']}}</td>
       @foreach($category as $cat)
       @if($cat_items['category_id'] == $cat['category_id'])
-      <td>{{$cat['category_name']}}</td>
+      <td class="name_category_item">{{$cat['category_name']}}</td>
       @endif
       @endforeach
-      <td><!-- <button type="button" class="btn btn-primary edit-item" data-toggle="modal" data-target="#itemEditModal"><i class="fas fa-pen"></i></button> --> <button id="{{$cat_items['id']}}" type="button" class="btn btn-danger delete-item"><i class="fas fa-times"></i></button></td>
+      <td><button type="button" class="btn btn-primary edit-item" data-toggle="modal" data-target="#itemEditModal"><i class="fas fa-pen"></i></button> <button id="{{$cat_items['id']}}" type="button" class="btn btn-danger delete-item"><i class="fas fa-times"></i></button></td>
     </tr>
     @endforeach
   </tbody>
@@ -136,7 +136,34 @@
   </div>
 </div>
 <!-- modal for category -->
-<!-- <div class="modal" tabindex="-1" role="dialog" id="itemEditModal">
+<div class="modal" tabindex="-1" role="dialog" id="categoryEditModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Category Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="modalid" value="">
+        <label>Category Name</label>
+        <input type="text" name="modalcategoryname" class="form-control" placeholder="Category Name">
+        <label>Is Pure Veg</label>
+        <select id="modal_is_veg" class="form-control">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary category-save">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal for items -->
+<div class="modal" tabindex="-1" role="dialog" id="itemEditModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -146,17 +173,34 @@
         </button>
       </div>
       <div class="modal-body">
-        <label>Name</label>
-        <input type="text" class="form-control" placeholder="Item Name">
+        <input type="hidden" name="modalitemid" value="">
+        <label>Item Name</label>
+        <input type="text" name="modalitemname" class="form-control" placeholder="Item Name">
+        <label>Item Description</label>
+        <input type="text" name="modalitemdescription" class="form-control" placeholder="Item Description">
+        <label>Item Price</label>
+        <input type="text" name="modalitemprice" class="form-control" placeholder="Item Price">
+        <label>Item Description</label>
+        <input type="text" name="modalitemdescription" class="form-control" placeholder="Item Description">
+        <label>Is Pure Veg</label>
+        <select id="modal_item_veg" class="form-control">
+        <option value="veg">Veg</option>
+        <option value="nonveg">Non Veg</option>
+      </select>
+      <label>Choose Category</label>
+      <select id="item-category-modal" class="form-control">
+          @foreach($category as $cat)
+        <option value="{{$cat['category_id']}}">{{$cat['category_name']}}</option>
+          @endforeach
+      </select>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary item-save">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
-</div> -->
-<!-- modal for items -->
+</div>
 @endsection
 
 @section('js')
@@ -252,7 +296,77 @@ $('.delete-item').on('click',function(){
                 });
 });
 
+$('.categorymodal').on('click',function(){
+  $('input[name="modalid"]').val($(this).closest('tr').children('.id_category').text());
+  $('input[name="modalcategoryname"]').val($(this).closest('tr').children('.name_category').text());
+  if(($(this).closest('tr').children('.veg_category').text().trim()) == 'Yes' )
+  {
+    $("#modal_is_veg").val('yes').change();
+  }
+  else
+    $("#modal_is_veg").val('no').change();
+});
 
+$('.category-save').on('click',function(){
+  var id = $('input[name="modalid"]').val();
+  var name = $('input[name="modalcategoryname"]').val();
+  var value = $("#modal_is_veg").val();
+  var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+                    /* the route pointing to the post function */
+                    url: "edit",
+                    type: 'POST',
+                    /* send the csrf-token and the input to the controller */
+                    data: {_token: CSRF_TOKEN, action: 'category',id:id , name:name , value:value},
+                    dataType: 'JSON',
+                    /* remind that 'data' is the response of the AjaxController */
+                    success: function (data) { 
+                        if(data.status == 'success')
+                        {
+                          window.location.reload();
+                        }
+                    }
+                });
+});
+
+$('.edit-item').on('click',function(){
+ $('input[name="modalitemid"]').val($(this).closest('tr').children('.id_item').text());
+ $('input[name="modalitemname"]').val($(this).closest('tr').children('.name_item').text());
+ $('input[name="modalitemdescription"]').val($(this).closest('tr').children('.description_item').text());
+ $('input[name="modalitemprice"]').val($(this).closest('tr').children('.price_item').text());
+  
+  var temp = $(this).closest('tr').children('.veg_item').text();
+  $("#modal_item_veg").val(temp).change();
+  var name = $(this).closest('tr').children('.name_category_item').text();
+   $('#item-category-modal option').map(function () {
+    if ($(this).text() == name) return this;
+}).attr('selected', 'selected');
+});
+
+$('.item-save').on('click',function(){
+  var id = $('input[name="modalitemid"]').val();
+  var name = $('input[name="modalitemname"]').val();
+  var description = $('input[name="modalitemdescription"]').val();
+  var price = $('input[name="modalitemprice"]').val();
+  var veg = $("#modal_item_veg").val();
+  var cat_id = $("#item-category-modal").val();
+  var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+                    /* the route pointing to the post function */
+                    url: "edit",
+                    type: 'POST',
+                    /* send the csrf-token and the input to the controller */
+                    data: {_token: CSRF_TOKEN, action: 'category-item',id:id , name:name , description:description, price:price,veg:veg,cat_id:cat_id},
+                    dataType: 'JSON',
+                    /* remind that 'data' is the response of the AjaxController */
+                    success: function (data) { 
+                        if(data.status == 'success')
+                        {
+                          window.location.reload();
+                        }
+                    }
+                });
+});
 
 </script>
 

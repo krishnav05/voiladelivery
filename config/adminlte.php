@@ -265,6 +265,11 @@ return [
             'url'  => 'admin/settings',
             'icon' => 'fas fa-cog',
         ],
+        [
+            'text' => 'License Status',
+            'url'  => 'admin/license',
+            'icon' => 'fas fa-key',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

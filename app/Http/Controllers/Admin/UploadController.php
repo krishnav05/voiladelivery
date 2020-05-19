@@ -17,6 +17,12 @@ class UploadController extends Controller
     //
 	public function index()
 	{
+    $check = Auth::guard('admin')->user()->license_id;
+      if($check == null)
+      {
+        return redirect()->route('license');
+      }
+    
 		return view('admin.upload');
 	}
 
