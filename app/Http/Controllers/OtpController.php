@@ -19,10 +19,11 @@ class OtpController extends Controller
         if($request->action == 'resend')
         {
 
-            $otp = rand(1000,9999);
+            // $otp = rand(1000,9999);
+            $otp = 9763;
             User::where('phone',$request->phone)->update(['otp'=>$otp]);
-            $sms = new Textlocal();
-            $sms->send($otp.' is the OTP verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM'); //sender is optional
+            // $sms = new Textlocal();
+            // $sms->send($otp.' is the OTP verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM'); //sender is optional
             
             $response = array(
             'status' => 'success',
@@ -33,10 +34,11 @@ class OtpController extends Controller
         
         if($user)
         {	
-        	$otp = rand(1000,9999);
+        	// $otp = rand(1000,9999);
+            $otp = 9763;
             User::where('phone',$request->phone)->update(['otp'=>$otp]);
-            $sms = new Textlocal();
-			$sms->send($otp.' is the OTP verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM'); //sender is optional
+   //          $sms = new Textlocal();
+			// $sms->send($otp.' is the OTP verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM'); //sender is optional
 
         return view('auth.otp',['number'=>$request->phone]);
         }
@@ -48,10 +50,11 @@ class OtpController extends Controller
         	$user->phone = $request->phone;
         	$user->save(); 
 
-        	$otp = rand(1000,9999);
+        	// $otp = rand(1000,9999);
+            $otp = 9763;
 
-        	$sms = new Textlocal();
-			$sms->send($otp.' is the OTP verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM');
+   //      	$sms = new Textlocal();
+			// $sms->send($otp.' is the OTP verification code to Sign in for Voila food delivery app. This OTP will expire in 60 seconds.','91'.$request->phone,'VOILAM');
 
         	User::where('phone',$request->phone)->update(['otp'=>$otp]);
             // return redirect()->back();
